@@ -1,0 +1,1249 @@
+Using SLF4J as the default logging framework
+-Dio.netty.noUnsafe: false
+Java version: 11
+sun.misc.Unsafe.theUnsafe: available
+sun.misc.Unsafe.copyMemory: available
+java.nio.Buffer.address: available
+direct buffer constructor: unavailable: Reflective setAccessible(true) disabled
+java.nio.Bits.unaligned: available, true
+jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable: class io.grpc.netty.shaded.io.netty.util.internal.PlatformDependent0$6 cannot access class jdk.internal.misc.Unsafe (in module java.base) because module java.base does not export jdk.internal.misc to unnamed module @31e7bdee
+java.nio.DirectByteBuffer.<init>(long, int): unavailable
+sun.misc.Unsafe: available
+maxDirectMemory: 4294967296 bytes (maybe)
+-Dio.netty.tmpdir: /var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T (java.io.tmpdir)
+-Dio.netty.bitMode: 64 (sun.arch.data.model)
+Platform: MacOS
+-Dio.netty.maxDirectMemory: -1 bytes
+-Dio.netty.uninitializedArrayAllocationThreshold: -1
+java.nio.ByteBuffer.cleaner(): available
+-Dio.netty.noPreferDirect: false
+-Dio.netty.eventLoopThreads: 8
+-Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+-Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+-Dio.netty.noKeySetOptimization: false
+-Dio.netty.selectorAutoRebuildThreshold: 512
+org.jctools-core.MpscChunkedArrayQueue: available
+-Dio.grpc.netty.shaded.io.netty.leakDetection.level: simple
+-Dio.grpc.netty.shaded.io.netty.leakDetection.targetRecords: 4
+-Dio.grpc.netty.shaded.io.netty.buffer.checkAccessible: true
+-Dio.grpc.netty.shaded.io.netty.buffer.checkBounds: true
+Loaded default ResourceLeakDetector: io.grpc.netty.shaded.io.netty.util.ResourceLeakDetector@1e28d1b8
+-Dio.netty.allocator.numHeapArenas: 8
+-Dio.netty.allocator.numDirectArenas: 8
+-Dio.netty.allocator.pageSize: 8192
+-Dio.netty.allocator.maxOrder: 11
+-Dio.netty.allocator.chunkSize: 16777216
+-Dio.netty.allocator.smallCacheSize: 256
+-Dio.netty.allocator.normalCacheSize: 64
+-Dio.netty.allocator.maxCachedBufferCapacity: 32768
+-Dio.netty.allocator.cacheTrimInterval: 8192
+-Dio.netty.allocator.cacheTrimIntervalMillis: 0
+-Dio.netty.allocator.useCacheForAllThreads: true
+-Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+-Dio.netty.processId: 65563 (auto-detected)
+-Djava.net.preferIPv4Stack: true
+-Djava.net.preferIPv6Addresses: false
+Loopback interface: lo0 (lo0, 127.0.0.1)
+Failed to get SOMAXCONN from sysctl and file /proc/sys/net/core/somaxconn. Default: 128
+-Dio.netty.machineId: c4:2c:03:ff:fe:17:5b:46 (auto-detected)
+-Dio.netty.allocator.type: pooled
+-Dio.netty.threadLocalDirectBufferSize: 0
+-Dio.netty.maxThreadLocalCharBufferSize: 16384
+-Dio.netty.recycler.maxCapacityPerThread: 4096
+-Dio.netty.recycler.ratio: 8
+-Dio.netty.recycler.chunkSize: 32
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] OUTBOUND SETTINGS: ack=false settings={ENABLE_PUSH=0, MAX_CONCURRENT_STREAMS=0, INITIAL_WINDOW_SIZE=1048576, MAX_HEADER_LIST_SIZE=8192}
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] OUTBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=983041
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND SETTINGS: ack=false settings={︃=1, INITIAL_WINDOW_SIZE=4194304, MAX_FRAME_SIZE=4194304, MAX_HEADER_LIST_SIZE=8192}
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] OUTBOUND SETTINGS: ack=true
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=4128769
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] OUTBOUND HEADERS: streamId=3 headers=GrpcHttp2OutboundHeaders[:authority: 127.0.0.1:4001, :path: /TaskHubSidecarService/StartInstance, :method: POST, :scheme: http, content-type: application/grpc, te: trailers, user-agent: grpc-java-netty/1.46.0, grpc-accept-encoding: gzip] streamDependency=0 weight=16 exclusive=false padding=0 endStream=false
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] OUTBOUND DATA: streamId=3 padding=0 endStream=true length=86 bytes=00000000510a2437316337303361342d343131632d343366352d613833632d333935393466653032376434121f4175746f70696c6f7450726f66696c6553796e...
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND SETTINGS: ack=true
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=86
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND PING: ack=false bytes=0
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] OUTBOUND PING: ack=true bytes=0
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND HEADERS: streamId=3 headers=GrpcHttp2ResponseHeaders[:status: 200, content-type: application/grpc, grpc-accept-encoding: identity,deflate,gzip, accept-encoding: identity,gzip] padding=0 endStream=false
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND DATA: streamId=3 padding=0 endStream=false length=43 bytes=00000000260a2437316337303361342d343131632d343366352d613833632d333935393466653032376434
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] OUTBOUND PING: ack=false bytes=1234
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND HEADERS: streamId=3 headers=GrpcHttp2ResponseHeaders[grpc-status: 0, grpc-message: ] padding=0 endStream=true
+[id: 0x7dc0f459, L:/127.0.0.1:56003 - R:/127.0.0.1:4001] INBOUND PING: ack=true bytes=1234
+Azure Identity => Found the following environment variables: 
+Azure Identity => ERROR in EnvironmentCredential: Missing required environment variable AZURE_CLIENT_ID
+Package versions: jackson-core=2.13.3, jackson-databind=2.13.3, jackson-dataformat-xml=2.13.3, jackson-datatype-jsr310=2.13.3, azure-core=1.32.0, Troubleshooting version conflicts: https://aka.ms/azsdk/java/dependency/troubleshoot
+Using Slf4j logging framework
+Azure Identity => Found the following environment variables: 
+Azure Identity => Found the following environment variables: 
+Using com.azure.core.http.netty.NettyAsyncHttpClientProvider as the default HttpClientProvider.
+Using SLF4J as the default logging framework
+-Dio.netty.noUnsafe: false
+Java version: 11
+sun.misc.Unsafe.theUnsafe: available
+sun.misc.Unsafe.copyMemory: available
+sun.misc.Unsafe.storeFence: available
+java.nio.Buffer.address: available
+direct buffer constructor: unavailable: Reflective setAccessible(true) disabled
+java.nio.Bits.unaligned: available, true
+jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable: class io.netty.util.internal.PlatformDependent0$7 cannot access class jdk.internal.misc.Unsafe (in module java.base) because module java.base does not export jdk.internal.misc to unnamed module @31e7bdee
+java.nio.DirectByteBuffer.<init>(long, int): unavailable
+sun.misc.Unsafe: available
+maxDirectMemory: 4294967296 bytes (maybe)
+-Dio.netty.tmpdir: /var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T (java.io.tmpdir)
+-Dio.netty.bitMode: 64 (sun.arch.data.model)
+Platform: MacOS
+-Dio.netty.maxDirectMemory: -1 bytes
+-Dio.netty.uninitializedArrayAllocationThreshold: -1
+java.nio.ByteBuffer.cleaner(): available
+-Dio.netty.noPreferDirect: false
+-Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+-Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+-Dio.netty.leakDetection.level: simple
+-Dio.netty.leakDetection.targetRecords: 4
+-Djava.net.preferIPv4Stack: true
+-Djava.net.preferIPv6Addresses: false
+Loopback interface: lo0 (lo0, 127.0.0.1)
+Failed to get SOMAXCONN from sysctl and file /proc/sys/net/core/somaxconn. Default: 128
+-Dio.netty.native.workdir: /var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T (io.netty.tmpdir)
+-Dio.netty.native.deleteLibAfterLoading: true
+-Dio.netty.native.tryPatchShadedId: true
+-Dio.netty.native.detectNativeLibraryDuplicates: true
+Failed to load netty-tcnative; OpenSslEngine will be unavailable, unless the application has already loaded the symbols by some other means. See https://netty.io/wiki/forked-tomcat-native.html for more information.
+java.lang.IllegalArgumentException: Failed to load any of the given libraries: [netty_tcnative_osx_x86_64, netty_tcnative_x86_64, netty_tcnative]
+	at io.netty.util.internal.NativeLibraryLoader.loadFirstAvailable(NativeLibraryLoader.java:114)
+	at io.netty.handler.ssl.OpenSsl.loadTcNative(OpenSsl.java:705)
+	at io.netty.handler.ssl.OpenSsl.<clinit>(OpenSsl.java:146)
+	at io.netty.handler.ssl.SslProvider.isAlpnSupported(SslProvider.java:53)
+	at reactor.netty.http.Http2SslContextSpec.lambda$static$0(Http2SslContextSpec.java:170)
+	at reactor.netty.tcp.AbstractProtocolSslContextSpec.configure(AbstractProtocolSslContextSpec.java:47)
+	at reactor.netty.tcp.AbstractProtocolSslContextSpec.<init>(AbstractProtocolSslContextSpec.java:39)
+	at reactor.netty.http.Http2SslContextSpec.<init>(Http2SslContextSpec.java:155)
+	at reactor.netty.http.Http2SslContextSpec.forClient(Http2SslContextSpec.java:59)
+	at reactor.netty.http.client.HttpClientSecure.<clinit>(HttpClientSecure.java:58)
+	at reactor.netty.http.client.HttpClientConnect$MonoHttpConnect.lambda$subscribe$0(HttpClientConnect.java:221)
+	at reactor.core.publisher.MonoCreate.subscribe(MonoCreate.java:58)
+	at reactor.core.publisher.FluxRetryWhen.subscribe(FluxRetryWhen.java:77)
+	at reactor.core.publisher.MonoRetryWhen.subscribeOrReturn(MonoRetryWhen.java:46)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:57)
+	at reactor.netty.http.client.HttpClientConnect$MonoHttpConnect.subscribe(HttpClientConnect.java:273)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64)
+	at reactor.core.publisher.FluxRetryWhen.subscribe(FluxRetryWhen.java:77)
+	at reactor.core.publisher.MonoRetryWhen.subscribeOrReturn(MonoRetryWhen.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4382)
+	at reactor.core.publisher.Mono.block(Mono.java:1706)
+	at com.azure.core.http.HttpClient.sendSync(HttpClient.java:42)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:38)
+	at com.azure.core.http.policy.HttpLoggingPolicy.processSync(HttpLoggingPolicy.java:133)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.processSync(BearerTokenAuthenticationPolicy.java:133)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.RetryPolicy.attemptSync(RetryPolicy.java:177)
+	at com.azure.core.http.policy.RetryPolicy.processSync(RetryPolicy.java:127)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.HttpPipelineSyncPolicy.processSync(HttpPipelineSyncPolicy.java:37)
+	at com.azure.core.http.policy.UserAgentPolicy.processSync(UserAgentPolicy.java:154)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.HttpPipeline.sendSync(HttpPipeline.java:121)
+	at com.azure.core.implementation.http.rest.SyncRestProxy.send(SyncRestProxy.java:49)
+	at com.azure.core.implementation.http.rest.SyncRestProxy.invoke(SyncRestProxy.java:74)
+	at com.azure.core.implementation.http.rest.RestProxyBase.invoke(RestProxyBase.java:110)
+	at com.azure.core.http.rest.RestProxy.invoke(RestProxy.java:95)
+	at com.sun.proxy.$Proxy14.getSecret(Unknown Source)
+	at com.azure.security.keyvault.secrets.implementation.SecretClientImpl.getSecretWithResponse(SecretClientImpl.java:544)
+	at com.azure.security.keyvault.secrets.SecretClient.getSecretWithResponse(SecretClient.java:229)
+	at com.azure.security.keyvault.secrets.SecretClient.getSecret(SecretClient.java:171)
+	at com.viohalco.KeyVault.getSecretValue(KeyVault.java:18)
+	at com.viohalco.DurableFunctionsAutopilot.sayHello(DurableFunctionsAutopilot.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.microsoft.azure.functions.worker.broker.JavaMethodInvokeInfo.invoke(JavaMethodInvokeInfo.java:22)
+	at com.microsoft.azure.functions.worker.broker.EnhancedJavaMethodExecutorImpl.execute(EnhancedJavaMethodExecutorImpl.java:55)
+	at com.microsoft.azure.functions.worker.broker.JavaFunctionBroker.invokeMethod(JavaFunctionBroker.java:61)
+	at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:33)
+	at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:10)
+	at com.microsoft.azure.functions.worker.handler.MessageHandler.handle(MessageHandler.java:45)
+	at com.microsoft.azure.functions.worker.JavaWorkerClient$StreamingMessagePeer.lambda$onNext$0(JavaWorkerClient.java:92)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+	Suppressed: java.lang.UnsatisfiedLinkError: /private/var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_tcnative_osx_x86_64909836550545037902.dylib: dlopen(/private/var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_tcnative_osx_x86_64909836550545037902.dylib, 1): no suitable image found.  Did find:
+	/private/var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_tcnative_osx_x86_64909836550545037902.dylib: cannot load 'libnetty_tcnative_osx_x86_64909836550545037902.dylib' (load command 0x80000034 is unknown)
+	/private/var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_tcnative_osx_x86_64909836550545037902.dylib: cannot load 'libnetty_tcnative_osx_x86_64909836550545037902.dylib' (load command 0x80000034 is unknown)
+		at java.base/java.lang.ClassLoader$NativeLibrary.load0(Native Method)
+		at java.base/java.lang.ClassLoader$NativeLibrary.load(ClassLoader.java:2432)
+		at java.base/java.lang.ClassLoader$NativeLibrary.loadLibrary(ClassLoader.java:2489)
+		at java.base/java.lang.ClassLoader.loadLibrary0(ClassLoader.java:2689)
+		at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2619)
+		at java.base/java.lang.Runtime.load0(Runtime.java:765)
+		at java.base/java.lang.System.load(System.java:1835)
+		at io.netty.util.internal.NativeLibraryUtil.loadLibrary(NativeLibraryUtil.java:36)
+		at io.netty.util.internal.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:391)
+		at io.netty.util.internal.NativeLibraryLoader.load(NativeLibraryLoader.java:218)
+		at io.netty.util.internal.NativeLibraryLoader.loadFirstAvailable(NativeLibraryLoader.java:105)
+		... 59 more
+		Suppressed: java.lang.UnsatisfiedLinkError: /private/var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_tcnative_osx_x86_64909836550545037902.dylib: dlopen(/private/var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_tcnative_osx_x86_64909836550545037902.dylib, 1): no suitable image found.  Did find:
+	/private/var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_tcnative_osx_x86_64909836550545037902.dylib: cannot load 'libnetty_tcnative_osx_x86_64909836550545037902.dylib' (load command 0x80000034 is unknown)
+	/private/var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_tcnative_osx_x86_64909836550545037902.dylib: cannot load 'libnetty_tcnative_osx_x86_64909836550545037902.dylib' (load command 0x80000034 is unknown)
+			at java.base/java.lang.ClassLoader$NativeLibrary.load0(Native Method)
+			at java.base/java.lang.ClassLoader$NativeLibrary.load(ClassLoader.java:2432)
+			at java.base/java.lang.ClassLoader$NativeLibrary.loadLibrary(ClassLoader.java:2489)
+			at java.base/java.lang.ClassLoader.loadLibrary0(ClassLoader.java:2689)
+			at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2619)
+			at java.base/java.lang.Runtime.load0(Runtime.java:765)
+			at java.base/java.lang.System.load(System.java:1835)
+			at io.netty.util.internal.NativeLibraryUtil.loadLibrary(NativeLibraryUtil.java:36)
+			at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+			at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+			at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+			at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+			at io.netty.util.internal.NativeLibraryLoader$1.run(NativeLibraryLoader.java:425)
+			at java.base/java.security.AccessController.doPrivileged(Native Method)
+			at io.netty.util.internal.NativeLibraryLoader.loadLibraryByHelper(NativeLibraryLoader.java:417)
+			at io.netty.util.internal.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:383)
+			... 61 more
+		Suppressed: java.lang.UnsatisfiedLinkError: no netty_tcnative_osx_x86_64 in java.library.path: [/Users/imac/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java, .]
+			at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2662)
+			at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:827)
+			at java.base/java.lang.System.loadLibrary(System.java:1871)
+			at io.netty.util.internal.NativeLibraryUtil.loadLibrary(NativeLibraryUtil.java:38)
+			at io.netty.util.internal.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:391)
+			at io.netty.util.internal.NativeLibraryLoader.load(NativeLibraryLoader.java:161)
+			... 60 more
+			Suppressed: java.lang.UnsatisfiedLinkError: no netty_tcnative_osx_x86_64 in java.library.path: [/Users/imac/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java, .]
+				at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2662)
+				at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:827)
+				at java.base/java.lang.System.loadLibrary(System.java:1871)
+				at io.netty.util.internal.NativeLibraryUtil.loadLibrary(NativeLibraryUtil.java:38)
+				at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+				at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+				at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+				at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+				at io.netty.util.internal.NativeLibraryLoader$1.run(NativeLibraryLoader.java:425)
+				at java.base/java.security.AccessController.doPrivileged(Native Method)
+				at io.netty.util.internal.NativeLibraryLoader.loadLibraryByHelper(NativeLibraryLoader.java:417)
+				at io.netty.util.internal.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:383)
+				... 61 more
+	Suppressed: java.lang.UnsatisfiedLinkError: could not load a native library: netty_tcnative_x86_64
+		at io.netty.util.internal.NativeLibraryLoader.load(NativeLibraryLoader.java:239)
+		at io.netty.util.internal.NativeLibraryLoader.loadFirstAvailable(NativeLibraryLoader.java:105)
+		... 59 more
+	Caused by: java.io.FileNotFoundException: META-INF/native/libnetty_tcnative_x86_64.jnilib
+		at io.netty.util.internal.NativeLibraryLoader.load(NativeLibraryLoader.java:181)
+		... 60 more
+		Suppressed: java.lang.UnsatisfiedLinkError: no netty_tcnative_x86_64 in java.library.path: [/Users/imac/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java, .]
+			at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2662)
+			at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:827)
+			at java.base/java.lang.System.loadLibrary(System.java:1871)
+			at io.netty.util.internal.NativeLibraryUtil.loadLibrary(NativeLibraryUtil.java:38)
+			at io.netty.util.internal.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:391)
+			at io.netty.util.internal.NativeLibraryLoader.load(NativeLibraryLoader.java:161)
+			... 60 more
+			Suppressed: java.lang.UnsatisfiedLinkError: no netty_tcnative_x86_64 in java.library.path: [/Users/imac/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java, .]
+				at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2662)
+				at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:827)
+				at java.base/java.lang.System.loadLibrary(System.java:1871)
+				at io.netty.util.internal.NativeLibraryUtil.loadLibrary(NativeLibraryUtil.java:38)
+				at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+				at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+				at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+				at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+				at io.netty.util.internal.NativeLibraryLoader$1.run(NativeLibraryLoader.java:425)
+				at java.base/java.security.AccessController.doPrivileged(Native Method)
+				at io.netty.util.internal.NativeLibraryLoader.loadLibraryByHelper(NativeLibraryLoader.java:417)
+				at io.netty.util.internal.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:383)
+				... 61 more
+	Suppressed: java.lang.UnsatisfiedLinkError: could not load a native library: netty_tcnative
+		at io.netty.util.internal.NativeLibraryLoader.load(NativeLibraryLoader.java:239)
+		at io.netty.util.internal.NativeLibraryLoader.loadFirstAvailable(NativeLibraryLoader.java:105)
+		... 59 more
+	Caused by: java.io.FileNotFoundException: META-INF/native/libnetty_tcnative.jnilib
+		at io.netty.util.internal.NativeLibraryLoader.load(NativeLibraryLoader.java:181)
+		... 60 more
+		Suppressed: java.lang.UnsatisfiedLinkError: no netty_tcnative in java.library.path: [/Users/imac/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java, .]
+			at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2662)
+			at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:827)
+			at java.base/java.lang.System.loadLibrary(System.java:1871)
+			at io.netty.util.internal.NativeLibraryUtil.loadLibrary(NativeLibraryUtil.java:38)
+			at io.netty.util.internal.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:391)
+			at io.netty.util.internal.NativeLibraryLoader.load(NativeLibraryLoader.java:161)
+			... 60 more
+			Suppressed: java.lang.UnsatisfiedLinkError: no netty_tcnative in java.library.path: [/Users/imac/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java, .]
+				at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2662)
+				at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:827)
+				at java.base/java.lang.System.loadLibrary(System.java:1871)
+				at io.netty.util.internal.NativeLibraryUtil.loadLibrary(NativeLibraryUtil.java:38)
+				at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+				at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+				at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+				at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+				at io.netty.util.internal.NativeLibraryLoader$1.run(NativeLibraryLoader.java:425)
+				at java.base/java.security.AccessController.doPrivileged(Native Method)
+				at io.netty.util.internal.NativeLibraryLoader.loadLibraryByHelper(NativeLibraryLoader.java:417)
+				at io.netty.util.internal.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:383)
+				... 61 more
+Initialize netty-tcnative using engine: 'default'
+Failed to initialize netty-tcnative; OpenSslEngine will be unavailable. See https://netty.io/wiki/forked-tomcat-native.html for more information.
+java.lang.UnsatisfiedLinkError: io.netty.internal.tcnative.Library.aprMajorVersion()I
+	at io.netty.internal.tcnative.Library.aprMajorVersion(Native Method)
+	at io.netty.internal.tcnative.Library.initialize(Library.java:191)
+	at io.netty.handler.ssl.OpenSsl.initializeTcNative(OpenSsl.java:710)
+	at io.netty.handler.ssl.OpenSsl.<clinit>(OpenSsl.java:163)
+	at io.netty.handler.ssl.SslProvider.isAlpnSupported(SslProvider.java:53)
+	at reactor.netty.http.Http2SslContextSpec.lambda$static$0(Http2SslContextSpec.java:170)
+	at reactor.netty.tcp.AbstractProtocolSslContextSpec.configure(AbstractProtocolSslContextSpec.java:47)
+	at reactor.netty.tcp.AbstractProtocolSslContextSpec.<init>(AbstractProtocolSslContextSpec.java:39)
+	at reactor.netty.http.Http2SslContextSpec.<init>(Http2SslContextSpec.java:155)
+	at reactor.netty.http.Http2SslContextSpec.forClient(Http2SslContextSpec.java:59)
+	at reactor.netty.http.client.HttpClientSecure.<clinit>(HttpClientSecure.java:58)
+	at reactor.netty.http.client.HttpClientConnect$MonoHttpConnect.lambda$subscribe$0(HttpClientConnect.java:221)
+	at reactor.core.publisher.MonoCreate.subscribe(MonoCreate.java:58)
+	at reactor.core.publisher.FluxRetryWhen.subscribe(FluxRetryWhen.java:77)
+	at reactor.core.publisher.MonoRetryWhen.subscribeOrReturn(MonoRetryWhen.java:46)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:57)
+	at reactor.netty.http.client.HttpClientConnect$MonoHttpConnect.subscribe(HttpClientConnect.java:273)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64)
+	at reactor.core.publisher.FluxRetryWhen.subscribe(FluxRetryWhen.java:77)
+	at reactor.core.publisher.MonoRetryWhen.subscribeOrReturn(MonoRetryWhen.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4382)
+	at reactor.core.publisher.Mono.block(Mono.java:1706)
+	at com.azure.core.http.HttpClient.sendSync(HttpClient.java:42)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:38)
+	at com.azure.core.http.policy.HttpLoggingPolicy.processSync(HttpLoggingPolicy.java:133)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.processSync(BearerTokenAuthenticationPolicy.java:133)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.RetryPolicy.attemptSync(RetryPolicy.java:177)
+	at com.azure.core.http.policy.RetryPolicy.processSync(RetryPolicy.java:127)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.HttpPipelineSyncPolicy.processSync(HttpPipelineSyncPolicy.java:37)
+	at com.azure.core.http.policy.UserAgentPolicy.processSync(UserAgentPolicy.java:154)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.HttpPipeline.sendSync(HttpPipeline.java:121)
+	at com.azure.core.implementation.http.rest.SyncRestProxy.send(SyncRestProxy.java:49)
+	at com.azure.core.implementation.http.rest.SyncRestProxy.invoke(SyncRestProxy.java:74)
+	at com.azure.core.implementation.http.rest.RestProxyBase.invoke(RestProxyBase.java:110)
+	at com.azure.core.http.rest.RestProxy.invoke(RestProxy.java:95)
+	at com.sun.proxy.$Proxy14.getSecret(Unknown Source)
+	at com.azure.security.keyvault.secrets.implementation.SecretClientImpl.getSecretWithResponse(SecretClientImpl.java:544)
+	at com.azure.security.keyvault.secrets.SecretClient.getSecretWithResponse(SecretClient.java:229)
+	at com.azure.security.keyvault.secrets.SecretClient.getSecret(SecretClient.java:171)
+	at com.viohalco.KeyVault.getSecretValue(KeyVault.java:18)
+	at com.viohalco.DurableFunctionsAutopilot.sayHello(DurableFunctionsAutopilot.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.microsoft.azure.functions.worker.broker.JavaMethodInvokeInfo.invoke(JavaMethodInvokeInfo.java:22)
+	at com.microsoft.azure.functions.worker.broker.EnhancedJavaMethodExecutorImpl.execute(EnhancedJavaMethodExecutorImpl.java:55)
+	at com.microsoft.azure.functions.worker.broker.JavaFunctionBroker.invokeMethod(JavaFunctionBroker.java:61)
+	at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:33)
+	at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:10)
+	at com.microsoft.azure.functions.worker.handler.MessageHandler.handle(MessageHandler.java:45)
+	at com.microsoft.azure.functions.worker.JavaWorkerClient$StreamingMessagePeer.lambda$onNext$0(JavaWorkerClient.java:92)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Default protocols (JDK): [TLSv1.3, TLSv1.2] 
+Default cipher suites (JDK): [TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_AES_128_GCM_SHA256, TLS_AES_256_GCM_SHA384]
+[http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=4, workerCount=4}
+[http] resources will use the default ConnectionProvider: reactor.netty.resources.DefaultPooledConnectionProvider@46d427e8
+Creating a new [http] client pool [PoolFactory{evictionInterval=PT0S, leasingStrategy=fifo, maxConnections=500, maxIdleTime=-1, maxLifeTime=-1, metricsEnabled=false, pendingAcquireMaxCount=1000, pendingAcquireTimeout=45000}] for [kv-st-weu-snt-p.vault.azure.net:443]
+Default io_uring support : false
+Default Epoll support : false
+Successfully loaded the library /var/folders/cp/20wzgkpx5jq_h6120gbshj_00000gn/T/libnetty_transport_native_kqueue_x86_644757988508532357292.dylib
+Default KQueue support : true
+-Dio.netty.eventLoopThreads: 8
+org.jctools-core.MpscChunkedArrayQueue: available
+-Dio.netty.buffer.checkAccessible: true
+-Dio.netty.buffer.checkBounds: true
+Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@3222acb2
+-Dio.netty.processId: 65563 (auto-detected)
+-Dio.netty.machineId: c4:2c:03:ff:fe:17:5b:46 (auto-detected)
+-Dio.netty.allocator.numHeapArenas: 8
+-Dio.netty.allocator.numDirectArenas: 8
+-Dio.netty.allocator.pageSize: 8192
+-Dio.netty.allocator.maxOrder: 9
+-Dio.netty.allocator.chunkSize: 4194304
+-Dio.netty.allocator.smallCacheSize: 256
+-Dio.netty.allocator.normalCacheSize: 64
+-Dio.netty.allocator.maxCachedBufferCapacity: 32768
+-Dio.netty.allocator.cacheTrimInterval: 8192
+-Dio.netty.allocator.cacheTrimIntervalMillis: 0
+-Dio.netty.allocator.useCacheForAllThreads: false
+-Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+-Dio.netty.allocator.type: pooled
+-Dio.netty.threadLocalDirectBufferSize: 0
+-Dio.netty.maxThreadLocalCharBufferSize: 16384
+[5412177c] Created a new pooled channel, now: 0 active connections, 0 inactive connections and 0 pending acquire requests.
+[5412177c] SSL enabled using engine sun.security.ssl.SSLEngineImpl@5f77d258 and SNI kv-st-weu-snt-p.vault.azure.net:443
+[5412177c] Initialized pipeline DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.sslReader = reactor.netty.tcp.SslProvider$SslReadHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c] Connecting to [kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443].
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Registering pool release on close event for channel
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Channel connected, now: 1 active connections, 0 inactive connections and 0 pending acquire requests.
+-Dio.netty.recycler.maxCapacityPerThread: 4096
+-Dio.netty.recycler.ratio: 8
+-Dio.netty.recycler.chunkSize: 32
+-Dio.netty.recycler.blocking: false
+[id: 0x5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] onStateChange(PooledConnection{channel=[id: 0x5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443]}, [connected])
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] onStateChange(GET{uri=/, connection=PooledConnection{channel=[id: 0x5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443]}}, [configured])
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Handler is being applied: {uri=https://kv-st-weu-snt-p.vault.azure.net/secrets/tenantId/?api-version=7.3, method=GET}
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] onStateChange(GET{uri=/secrets/tenantId/?api-version=7.3, connection=PooledConnection{channel=[id: 0x5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443]}}, [request_prepared])
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Added decoder [azureWriteTimeoutHandler] at the end of the user pipeline, full pipeline: [reactor.left.sslHandler, reactor.left.httpCodec, azureWriteTimeoutHandler, reactor.right.reactiveBridge, DefaultChannelPipeline$TailContext#0]
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Non Removed handler: azureRequestProgressHandler, context: null, pipeline: DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (azureWriteTimeoutHandler = com.azure.core.http.netty.implementation.WriteTimeoutHandler), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] onStateChange(GET{uri=/secrets/tenantId/?api-version=7.3, connection=PooledConnection{channel=[id: 0x5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443]}}, [request_sent])
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Non Removed handler: azureRequestProgressHandler, context: null, pipeline: DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (azureWriteTimeoutHandler = com.azure.core.http.netty.implementation.WriteTimeoutHandler), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Removed handler: azureWriteTimeoutHandler, pipeline: DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Added decoder [azureResponseTimeoutHandler] at the end of the user pipeline, full pipeline: [reactor.left.sslHandler, reactor.left.httpCodec, azureResponseTimeoutHandler, reactor.right.reactiveBridge, DefaultChannelPipeline$TailContext#0]
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Received response (auto-read:false) : [Cache-Control=no-cache, Pragma=no-cache, Content-Type=application/json; charset=utf-8, Expires=-1, WWW-Authenticate=Bearer authorization="https://login.windows.net/ac16fc13-eed0-45a8-a4cd-092120207ca4", resource="https://vault.azure.net", x-ms-keyvault-region=westeurope, x-ms-request-id=1dc94b0e-62e2-4647-b614-0c52e2e9e7d2, x-ms-keyvault-service-version=1.9.501.1, x-ms-keyvault-network-info=conn_type=Ipv4;addr=85.75.217.94;act_addr_fam=InterNetwork;, X-Content-Type-Options=nosniff, Strict-Transport-Security=max-age=31536000;includeSubDomains, Date=Wed, 07 Sep 2022 13:49:10 GMT, content-length=97]
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] onStateChange(GET{uri=/secrets/tenantId/?api-version=7.3, connection=PooledConnection{channel=[id: 0x5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443]}}, [response_received])
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Removed handler: azureResponseTimeoutHandler, pipeline: DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Added decoder [azureReadTimeoutHandler] at the end of the user pipeline, full pipeline: [reactor.left.sslHandler, reactor.left.httpCodec, azureReadTimeoutHandler, reactor.right.reactiveBridge, DefaultChannelPipeline$TailContext#0]
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] FluxReceive{pending=0, cancelled=false, inboundDone=false, inboundError=null}: subscribing inbound receiver
+[5412177c-1, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Received last HTTP packet
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] onStateChange(GET{uri=/secrets/tenantId/?api-version=7.3, connection=PooledConnection{channel=[id: 0x5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443]}}, [response_completed])
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Removed handler: azureReadTimeoutHandler, pipeline: DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Non Removed handler: azureWriteTimeoutHandler, context: null, pipeline: DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Non Removed handler: azureResponseTimeoutHandler, context: null, pipeline: DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Non Removed handler: azureReadTimeoutHandler, context: null, pipeline: DefaultChannelPipeline{(reactor.left.sslHandler = io.netty.handler.ssl.SslHandler), (reactor.left.httpCodec = io.netty.handler.codec.http.HttpClientCodec), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] onStateChange(GET{uri=/secrets/tenantId/?api-version=7.3, connection=PooledConnection{channel=[id: 0x5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443]}}, [disconnecting])
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Releasing channel
+[5412177c, L:/10.224.245.66:56004 - R:kv-st-weu-snt-p.vault.azure.net/20.61.103.232:443] Channel cleaned, now: 0 active connections, 1 inactive connections and 0 pending acquire requests.
+EnvironmentCredential authentication unavailable. Environment variables are not fully configured.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/environmentcredential/troubleshoot
+com.azure.identity.CredentialUnavailableException: EnvironmentCredential authentication unavailable. Environment variables are not fully configured.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/environmentcredential/troubleshoot
+	at com.azure.identity.EnvironmentCredential.getToken(EnvironmentCredential.java:129)
+	at com.azure.identity.ChainedTokenCredential.lambda$getToken$2(ChainedTokenCredential.java:71)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:386)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onSubscribe(FluxFlatMap.java:371)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:165)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:87)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoFromFluxOperator.subscribe(MonoFromFluxOperator.java:81)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.Mono.block(Mono.java:1706)
+	at com.azure.core.implementation.AccessTokenCache.getTokenSync(AccessTokenCache.java:72)
+	at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.setAuthorizationHeaderHelperSync(BearerTokenAuthenticationPolicy.java:184)
+	at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.setAuthorizationHeaderSync(BearerTokenAuthenticationPolicy.java:170)
+	at com.azure.security.keyvault.secrets.implementation.KeyVaultCredentialPolicy.authorizeRequestOnChallengeSync(KeyVaultCredentialPolicy.java:285)
+	at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.processSync(BearerTokenAuthenticationPolicy.java:136)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.RetryPolicy.attemptSync(RetryPolicy.java:177)
+	at com.azure.core.http.policy.RetryPolicy.processSync(RetryPolicy.java:127)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.HttpPipelineSyncPolicy.processSync(HttpPipelineSyncPolicy.java:37)
+	at com.azure.core.http.policy.UserAgentPolicy.processSync(UserAgentPolicy.java:154)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.HttpPipeline.sendSync(HttpPipeline.java:121)
+	at com.azure.core.implementation.http.rest.SyncRestProxy.send(SyncRestProxy.java:49)
+	at com.azure.core.implementation.http.rest.SyncRestProxy.invoke(SyncRestProxy.java:74)
+	at com.azure.core.implementation.http.rest.RestProxyBase.invoke(RestProxyBase.java:110)
+	at com.azure.core.http.rest.RestProxy.invoke(RestProxy.java:95)
+	at com.sun.proxy.$Proxy14.getSecret(Unknown Source)
+	at com.azure.security.keyvault.secrets.implementation.SecretClientImpl.getSecretWithResponse(SecretClientImpl.java:544)
+	at com.azure.security.keyvault.secrets.SecretClient.getSecretWithResponse(SecretClient.java:229)
+	at com.azure.security.keyvault.secrets.SecretClient.getSecret(SecretClient.java:171)
+	at com.viohalco.KeyVault.getSecretValue(KeyVault.java:18)
+	at com.viohalco.DurableFunctionsAutopilot.sayHello(DurableFunctionsAutopilot.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.microsoft.azure.functions.worker.broker.JavaMethodInvokeInfo.invoke(JavaMethodInvokeInfo.java:22)
+	at com.microsoft.azure.functions.worker.broker.EnhancedJavaMethodExecutorImpl.execute(EnhancedJavaMethodExecutorImpl.java:55)
+	at com.microsoft.azure.functions.worker.broker.JavaFunctionBroker.invokeMethod(JavaFunctionBroker.java:61)
+	at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:33)
+	at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:10)
+	at com.microsoft.azure.functions.worker.handler.MessageHandler.handle(MessageHandler.java:45)
+	at com.microsoft.azure.functions.worker.JavaWorkerClient$StreamingMessagePeer.lambda$onNext$0(JavaWorkerClient.java:92)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Azure Identity => Attempted credential EnvironmentCredential is unavailable.
+ManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, No route to host (connect failed).
+com.azure.identity.CredentialUnavailableException: ManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, No route to host (connect failed).
+	at com.azure.identity.implementation.IdentityClient.lambda$checkIMDSAvailable$59(IdentityClient.java:1481)
+	at reactor.core.publisher.MonoCallable.call(MonoCallable.java:92)
+	at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:127)
+	at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4382)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:426)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onSubscribe(FluxFlatMap.java:371)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:165)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:87)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoFromFluxOperator.subscribe(MonoFromFluxOperator.java:81)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.Mono.block(Mono.java:1706)
+	at com.azure.core.implementation.AccessTokenCache.getTokenSync(AccessTokenCache.java:72)
+	at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.setAuthorizationHeaderHelperSync(BearerTokenAuthenticationPolicy.java:184)
+	at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.setAuthorizationHeaderSync(BearerTokenAuthenticationPolicy.java:170)
+	at com.azure.security.keyvault.secrets.implementation.KeyVaultCredentialPolicy.authorizeRequestOnChallengeSync(KeyVaultCredentialPolicy.java:285)
+	at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.processSync(BearerTokenAuthenticationPolicy.java:136)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.RetryPolicy.attemptSync(RetryPolicy.java:177)
+	at com.azure.core.http.policy.RetryPolicy.processSync(RetryPolicy.java:127)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.policy.HttpPipelineSyncPolicy.processSync(HttpPipelineSyncPolicy.java:37)
+	at com.azure.core.http.policy.UserAgentPolicy.processSync(UserAgentPolicy.java:154)
+	at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+	at com.azure.core.http.HttpPipeline.sendSync(HttpPipeline.java:121)
+	at com.azure.core.implementation.http.rest.SyncRestProxy.send(SyncRestProxy.java:49)
+	at com.azure.core.implementation.http.rest.SyncRestProxy.invoke(SyncRestProxy.java:74)
+	at com.azure.core.implementation.http.rest.RestProxyBase.invoke(RestProxyBase.java:110)
+	at com.azure.core.http.rest.RestProxy.invoke(RestProxy.java:95)
+	at com.sun.proxy.$Proxy14.getSecret(Unknown Source)
+	at com.azure.security.keyvault.secrets.implementation.SecretClientImpl.getSecretWithResponse(SecretClientImpl.java:544)
+	at com.azure.security.keyvault.secrets.SecretClient.getSecretWithResponse(SecretClient.java:229)
+	at com.azure.security.keyvault.secrets.SecretClient.getSecret(SecretClient.java:171)
+	at com.viohalco.KeyVault.getSecretValue(KeyVault.java:18)
+	at com.viohalco.DurableFunctionsAutopilot.sayHello(DurableFunctionsAutopilot.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.microsoft.azure.functions.worker.broker.JavaMethodInvokeInfo.invoke(JavaMethodInvokeInfo.java:22)
+	at com.microsoft.azure.functions.worker.broker.EnhancedJavaMethodExecutorImpl.execute(EnhancedJavaMethodExecutorImpl.java:55)
+	at com.microsoft.azure.functions.worker.broker.JavaFunctionBroker.invokeMethod(JavaFunctionBroker.java:61)
+	at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:33)
+	at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:10)
+	at com.microsoft.azure.functions.worker.handler.MessageHandler.handle(MessageHandler.java:45)
+	at com.microsoft.azure.functions.worker.JavaWorkerClient$StreamingMessagePeer.lambda$onNext$0(JavaWorkerClient.java:92)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: No route to host (connect failed)
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:177)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:508)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:603)
+	at java.base/sun.net.www.http.HttpClient.<init>(HttpClient.java:276)
+	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:375)
+	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:396)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1253)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1187)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1081)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:1015)
+	at com.azure.identity.implementation.IdentityClient.lambda$checkIMDSAvailable$59(IdentityClient.java:1475)
+	... 57 more
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: ManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, No route to host (connect failed).
+Azure Identity => Attempted credential ManagedIdentityCredential is unavailable.
+SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.
+com.azure.identity.CredentialUnavailableException: SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.
+	at com.azure.identity.implementation.IdentityClient.lambda$authenticateWithSharedTokenCache$50(IdentityClient.java:1005)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.
+Azure Identity => Attempted credential SharedTokenCacheCredential is unavailable.
+IntelliJCredential => Refresh Token Cache Unavailable: null
+IntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.
+com.azure.identity.CredentialUnavailableException: IntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.
+	at com.azure.identity.implementation.IdentityClient.authenticateWithIntelliJ(IdentityClient.java:374)
+	at com.azure.identity.IntelliJCredential.lambda$getToken$2(IntelliJCredential.java:88)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:44)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onComplete(FluxSwitchIfEmpty.java:82)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:426)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:790)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.FluxMap$MapConditionalSubscriber.onError(FluxMap.java:265)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:192)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:259)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: IntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.
+Azure Identity => Attempted credential IntelliJCredential is unavailable.
+Failed to read Vs Code credentials from Mac Native Key Chain.
+com.azure.identity.CredentialUnavailableException: Failed to read Vs Code credentials from Mac Native Key Chain.
+	at com.azure.identity.implementation.VisualStudioCacheAccessor.getCredentials(VisualStudioCacheAccessor.java:120)
+	at com.azure.identity.implementation.IdentityClient.authenticateWithVsCodeCredential(IdentityClient.java:877)
+	at com.azure.identity.VisualStudioCodeCredential.lambda$getToken$2(VisualStudioCodeCredential.java:77)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:44)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onComplete(FluxSwitchIfEmpty.java:82)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:426)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:790)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.FluxMap$MapConditionalSubscriber.onError(FluxMap.java:265)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:192)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:259)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Caused by: java.lang.NullPointerException
+	at java.base/java.lang.String.<init>(String.java:561)
+	at com.azure.identity.implementation.VisualStudioCacheAccessor.getCredentials(VisualStudioCacheAccessor.java:118)
+	... 41 more
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: Failed to read Vs Code credentials from Mac Native Key Chain.
+Azure Identity => Attempted credential VisualStudioCodeCredential is unavailable.
+AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+com.azure.identity.CredentialUnavailableException: AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+	at com.azure.identity.implementation.IdentityClient.authenticateWithAzureCli(IdentityClient.java:513)
+	at com.azure.identity.AzureCliCredential.getToken(AzureCliCredential.java:40)
+	at com.azure.identity.ChainedTokenCredential.lambda$getToken$2(ChainedTokenCredential.java:71)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:386)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:790)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.FluxMap$MapConditionalSubscriber.onError(FluxMap.java:265)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:192)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:259)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+com.azure.identity.CredentialUnavailableException: AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+	at com.azure.identity.implementation.IdentityClient.authenticateWithAzureCli(IdentityClient.java:513)
+	at com.azure.identity.AzureCliCredential.getToken(AzureCliCredential.java:40)
+	at com.azure.identity.ChainedTokenCredential.lambda$getToken$2(ChainedTokenCredential.java:71)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:386)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:790)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.FluxMap$MapConditionalSubscriber.onError(FluxMap.java:265)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:192)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:259)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+Azure Identity => Attempted credential AzureCliCredential is unavailable.
+Unable to execute PowerShell. Please make sure that it is installed in your system
+com.azure.identity.CredentialUnavailableException: Unable to execute PowerShell. Please make sure that it is installed in your system
+	at com.azure.identity.implementation.PowershellManager.lambda$initSession$0(PowershellManager.java:72)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1700)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Caused by: java.io.IOException: Cannot run program "pwsh": error=2, No such file or directory
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1128)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1071)
+	at com.azure.identity.implementation.PowershellManager.lambda$initSession$0(PowershellManager.java:62)
+	... 7 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:340)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:271)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1107)
+	... 9 more
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: Unable to execute PowerShell. Please make sure that it is installed in your system
+Azure Identity => Attempted credential AzurePowerShellCredential is unavailable.
+Failed to acquire a new access token.
+{"az.sdk.message":"Error resume.","exception":"EnvironmentCredential authentication unavailable. Environment variables are not fully configured.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/environmentcredential/troubleshoot\r\nManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, No route to host (connect failed).\r\nSharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.\r\nIntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.\r\nFailed to read Vs Code credentials from Mac Native Key Chain.\r\nAzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot\r\nUnable to execute PowerShell. Please make sure that it is installed in your systemTo mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azure-identity-java-default-azure-credential-troubleshoot","tryCount":0}
+com.azure.identity.CredentialUnavailableException: EnvironmentCredential authentication unavailable. Environment variables are not fully configured.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/environmentcredential/troubleshoot
+ManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, No route to host (connect failed).
+SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.
+IntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.
+Failed to read Vs Code credentials from Mac Native Key Chain.
+AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+Unable to execute PowerShell. Please make sure that it is installed in your systemTo mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azure-identity-java-default-azure-credential-troubleshoot
+	at com.azure.identity.ChainedTokenCredential.lambda$getToken$3(ChainedTokenCredential.java:95)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:44)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onComplete(FluxSwitchIfEmpty.java:82)
+	at reactor.core.publisher.MonoNext$NextSubscriber.onComplete(MonoNext.java:102)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.checkTerminated(FluxFlatMap.java:846)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:608)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.Operators.error(Operators.java:198)
+	at reactor.core.publisher.MonoError.subscribe(MonoError.java:53)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onComplete(FluxSwitchIfEmpty.java:82)
+	at reactor.core.publisher.MonoNext$NextSubscriber.onComplete(MonoNext.java:102)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.checkTerminated(FluxFlatMap.java:846)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:608)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxDoFinally$DoFinallySubscriber.onError(FluxDoFinally.java:119)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onError(MonoFlatMap.java:172)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:77)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+	Suppressed: java.lang.Exception: #block terminated with an error
+		at reactor.core.publisher.BlockingSingleSubscriber.blockingGet(BlockingSingleSubscriber.java:99)
+		at reactor.core.publisher.Mono.block(Mono.java:1707)
+		at com.azure.core.implementation.AccessTokenCache.getTokenSync(AccessTokenCache.java:72)
+		at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.setAuthorizationHeaderHelperSync(BearerTokenAuthenticationPolicy.java:184)
+		at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.setAuthorizationHeaderSync(BearerTokenAuthenticationPolicy.java:170)
+		at com.azure.security.keyvault.secrets.implementation.KeyVaultCredentialPolicy.authorizeRequestOnChallengeSync(KeyVaultCredentialPolicy.java:285)
+		at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.processSync(BearerTokenAuthenticationPolicy.java:136)
+		at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+		at com.azure.core.http.policy.RetryPolicy.attemptSync(RetryPolicy.java:177)
+		at com.azure.core.http.policy.RetryPolicy.processSync(RetryPolicy.java:127)
+		at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+		at com.azure.core.http.policy.HttpPipelineSyncPolicy.processSync(HttpPipelineSyncPolicy.java:37)
+		at com.azure.core.http.policy.UserAgentPolicy.processSync(UserAgentPolicy.java:154)
+		at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+		at com.azure.core.http.HttpPipeline.sendSync(HttpPipeline.java:121)
+		at com.azure.core.implementation.http.rest.SyncRestProxy.send(SyncRestProxy.java:49)
+		at com.azure.core.implementation.http.rest.SyncRestProxy.invoke(SyncRestProxy.java:74)
+		at com.azure.core.implementation.http.rest.RestProxyBase.invoke(RestProxyBase.java:110)
+		at com.azure.core.http.rest.RestProxy.invoke(RestProxy.java:95)
+		at com.sun.proxy.$Proxy14.getSecret(Unknown Source)
+		at com.azure.security.keyvault.secrets.implementation.SecretClientImpl.getSecretWithResponse(SecretClientImpl.java:544)
+		at com.azure.security.keyvault.secrets.SecretClient.getSecretWithResponse(SecretClient.java:229)
+		at com.azure.security.keyvault.secrets.SecretClient.getSecret(SecretClient.java:171)
+		at com.viohalco.KeyVault.getSecretValue(KeyVault.java:18)
+		at com.viohalco.DurableFunctionsAutopilot.sayHello(DurableFunctionsAutopilot.java:63)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+		at com.microsoft.azure.functions.worker.broker.JavaMethodInvokeInfo.invoke(JavaMethodInvokeInfo.java:22)
+		at com.microsoft.azure.functions.worker.broker.EnhancedJavaMethodExecutorImpl.execute(EnhancedJavaMethodExecutorImpl.java:55)
+		at com.microsoft.azure.functions.worker.broker.JavaFunctionBroker.invokeMethod(JavaFunctionBroker.java:61)
+		at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:33)
+		at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:10)
+		at com.microsoft.azure.functions.worker.handler.MessageHandler.handle(MessageHandler.java:45)
+		at com.microsoft.azure.functions.worker.JavaWorkerClient$StreamingMessagePeer.lambda$onNext$0(JavaWorkerClient.java:92)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+		at java.base/java.lang.Thread.run(Thread.java:834)
+EnvironmentCredential authentication unavailable. Environment variables are not fully configured.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/environmentcredential/troubleshoot
+com.azure.identity.CredentialUnavailableException: EnvironmentCredential authentication unavailable. Environment variables are not fully configured.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/environmentcredential/troubleshoot
+	at com.azure.identity.EnvironmentCredential.getToken(EnvironmentCredential.java:129)
+	at com.azure.identity.ChainedTokenCredential.lambda$getToken$2(ChainedTokenCredential.java:71)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:386)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onSubscribe(FluxFlatMap.java:371)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:165)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:87)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoDelaySubscription.accept(MonoDelaySubscription.java:53)
+	at reactor.core.publisher.MonoDelaySubscription.accept(MonoDelaySubscription.java:34)
+	at reactor.core.publisher.FluxDelaySubscription$DelaySubscriptionOtherSubscriber.onNext(FluxDelaySubscription.java:131)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.propagateDelay(MonoDelay.java:271)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.run(MonoDelay.java:286)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Azure Identity => Attempted credential EnvironmentCredential is unavailable.
+ManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, connect timed out.
+com.azure.identity.CredentialUnavailableException: ManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, connect timed out.
+	at com.azure.identity.implementation.IdentityClient.lambda$checkIMDSAvailable$59(IdentityClient.java:1481)
+	at reactor.core.publisher.MonoCallable.call(MonoCallable.java:92)
+	at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:127)
+	at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4382)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:426)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onSubscribe(FluxFlatMap.java:371)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:165)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:87)
+	at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoDelaySubscription.accept(MonoDelaySubscription.java:53)
+	at reactor.core.publisher.MonoDelaySubscription.accept(MonoDelaySubscription.java:34)
+	at reactor.core.publisher.FluxDelaySubscription$DelaySubscriptionOtherSubscriber.onNext(FluxDelaySubscription.java:131)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.propagateDelay(MonoDelay.java:271)
+	at reactor.core.publisher.MonoDelay$MonoDelayRunnable.run(MonoDelay.java:286)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.SocketTimeoutException: connect timed out
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:177)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:508)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:603)
+	at java.base/sun.net.www.http.HttpClient.<init>(HttpClient.java:276)
+	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:375)
+	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:396)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1253)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1187)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1081)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:1015)
+	at com.azure.identity.implementation.IdentityClient.lambda$checkIMDSAvailable$59(IdentityClient.java:1475)
+	... 24 more
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: ManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, connect timed out.
+Azure Identity => Attempted credential ManagedIdentityCredential is unavailable.
+SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.
+com.azure.identity.CredentialUnavailableException: SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.
+	at com.azure.identity.implementation.IdentityClient.lambda$authenticateWithSharedTokenCache$50(IdentityClient.java:1005)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.
+Azure Identity => Attempted credential SharedTokenCacheCredential is unavailable.
+IntelliJCredential => Refresh Token Cache Unavailable: null
+IntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.
+com.azure.identity.CredentialUnavailableException: IntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.
+	at com.azure.identity.implementation.IdentityClient.authenticateWithIntelliJ(IdentityClient.java:374)
+	at com.azure.identity.IntelliJCredential.lambda$getToken$2(IntelliJCredential.java:88)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:44)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onComplete(FluxSwitchIfEmpty.java:82)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:426)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:790)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.FluxMap$MapConditionalSubscriber.onError(FluxMap.java:265)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:192)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:259)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: IntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.
+Azure Identity => Attempted credential IntelliJCredential is unavailable.
+Failed to read Vs Code credentials from Mac Native Key Chain.
+com.azure.identity.CredentialUnavailableException: Failed to read Vs Code credentials from Mac Native Key Chain.
+	at com.azure.identity.implementation.VisualStudioCacheAccessor.getCredentials(VisualStudioCacheAccessor.java:120)
+	at com.azure.identity.implementation.IdentityClient.authenticateWithVsCodeCredential(IdentityClient.java:877)
+	at com.azure.identity.VisualStudioCodeCredential.lambda$getToken$2(VisualStudioCodeCredential.java:77)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:44)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onComplete(FluxSwitchIfEmpty.java:82)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:426)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:790)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.FluxMap$MapConditionalSubscriber.onError(FluxMap.java:265)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:192)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:259)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Caused by: java.lang.NullPointerException
+	at java.base/java.lang.String.<init>(String.java:561)
+	at com.azure.identity.implementation.VisualStudioCacheAccessor.getCredentials(VisualStudioCacheAccessor.java:118)
+	... 41 more
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: Failed to read Vs Code credentials from Mac Native Key Chain.
+Azure Identity => Attempted credential VisualStudioCodeCredential is unavailable.
+AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+com.azure.identity.CredentialUnavailableException: AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+	at com.azure.identity.implementation.IdentityClient.authenticateWithAzureCli(IdentityClient.java:513)
+	at com.azure.identity.AzureCliCredential.getToken(AzureCliCredential.java:40)
+	at com.azure.identity.ChainedTokenCredential.lambda$getToken$2(ChainedTokenCredential.java:71)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:386)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:790)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.FluxMap$MapConditionalSubscriber.onError(FluxMap.java:265)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:192)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:259)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+com.azure.identity.CredentialUnavailableException: AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+	at com.azure.identity.implementation.IdentityClient.authenticateWithAzureCli(IdentityClient.java:513)
+	at com.azure.identity.AzureCliCredential.getToken(AzureCliCredential.java:40)
+	at com.azure.identity.ChainedTokenCredential.lambda$getToken$2(ChainedTokenCredential.java:71)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onNext(FluxFlatMap.java:386)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:272)
+	at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:230)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:790)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.FluxMap$MapConditionalSubscriber.onError(FluxMap.java:265)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:192)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:259)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:83)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+Azure Identity => Attempted credential AzureCliCredential is unavailable.
+Unable to execute PowerShell. Please make sure that it is installed in your system
+com.azure.identity.CredentialUnavailableException: Unable to execute PowerShell. Please make sure that it is installed in your system
+	at com.azure.identity.implementation.PowershellManager.lambda$initSession$0(PowershellManager.java:72)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1700)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Caused by: java.io.IOException: Cannot run program "pwsh": error=2, No such file or directory
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1128)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1071)
+	at com.azure.identity.implementation.PowershellManager.lambda$initSession$0(PowershellManager.java:62)
+	... 7 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:340)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:271)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1107)
+	... 9 more
+Azure Identity => ERROR in getToken() call for scopes [https://vault.azure.net/.default]: Unable to execute PowerShell. Please make sure that it is installed in your system
+Azure Identity => Attempted credential AzurePowerShellCredential is unavailable.
+Failed to acquire a new access token.
+{"az.sdk.message":"Error resume.","exception":"EnvironmentCredential authentication unavailable. Environment variables are not fully configured.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/environmentcredential/troubleshoot\r\nManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, connect timed out.\r\nSharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.\r\nIntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.\r\nFailed to read Vs Code credentials from Mac Native Key Chain.\r\nAzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot\r\nUnable to execute PowerShell. Please make sure that it is installed in your systemTo mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azure-identity-java-default-azure-credential-troubleshoot","tryCount":1}
+com.azure.identity.CredentialUnavailableException: EnvironmentCredential authentication unavailable. Environment variables are not fully configured.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/environmentcredential/troubleshoot
+ManagedIdentityCredential authentication unavailable. Connection to IMDS endpoint cannot be established, connect timed out.
+SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.
+IntelliJ Authentication not available. Please log in with Azure Tools for IntelliJ plugin in the IDE.
+Failed to read Vs Code credentials from Mac Native Key Chain.
+AzureCliCredential authentication unavailable. Azure CLI not installed.To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/java/identity/azclicredential/troubleshoot
+Unable to execute PowerShell. Please make sure that it is installed in your systemTo mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azure-identity-java-default-azure-credential-troubleshoot
+	at com.azure.identity.ChainedTokenCredential.lambda$getToken$3(ChainedTokenCredential.java:95)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:44)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onComplete(FluxSwitchIfEmpty.java:82)
+	at reactor.core.publisher.MonoNext$NextSubscriber.onComplete(MonoNext.java:102)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.checkTerminated(FluxFlatMap.java:846)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:608)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onError(FluxPeekFuseable.java:234)
+	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onError(MonoPeekTerminal.java:258)
+	at reactor.core.publisher.FluxPeekFuseable$PeekConditionalSubscriber.onError(FluxPeekFuseable.java:903)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onError(Operators.java:2063)
+	at reactor.core.publisher.Operators.error(Operators.java:198)
+	at reactor.core.publisher.MonoError.subscribe(MonoError.java:53)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onComplete(FluxSwitchIfEmpty.java:82)
+	at reactor.core.publisher.MonoNext$NextSubscriber.onComplete(MonoNext.java:102)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.checkTerminated(FluxFlatMap.java:846)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:608)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.innerComplete(FluxFlatMap.java:894)
+	at reactor.core.publisher.FluxFlatMap$FlatMapInner.onComplete(FluxFlatMap.java:997)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onComplete(Operators.java:2058)
+	at reactor.core.publisher.Operators.complete(Operators.java:137)
+	at reactor.core.publisher.MonoEmpty.subscribe(MonoEmpty.java:46)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:4397)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103)
+	at reactor.core.publisher.FluxDoFinally$DoFinallySubscriber.onError(FluxDoFinally.java:119)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onError(MonoFlatMap.java:172)
+	at reactor.core.publisher.MonoCompletionStage.lambda$subscribe$0(MonoCompletionStage.java:77)
+	at java.base/java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:859)
+	at java.base/java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:837)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:506)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1705)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1692)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+	Suppressed: java.lang.Exception: #block terminated with an error
+		at reactor.core.publisher.BlockingSingleSubscriber.blockingGet(BlockingSingleSubscriber.java:99)
+		at reactor.core.publisher.Mono.block(Mono.java:1707)
+		at com.azure.core.implementation.AccessTokenCache.getTokenSync(AccessTokenCache.java:72)
+		at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.setAuthorizationHeaderHelperSync(BearerTokenAuthenticationPolicy.java:184)
+		at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.setAuthorizationHeaderSync(BearerTokenAuthenticationPolicy.java:170)
+		at com.azure.security.keyvault.secrets.implementation.KeyVaultCredentialPolicy.authorizeRequestSync(KeyVaultCredentialPolicy.java:210)
+		at com.azure.core.http.policy.BearerTokenAuthenticationPolicy.processSync(BearerTokenAuthenticationPolicy.java:132)
+		at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+		at com.azure.core.http.policy.RetryPolicy.attemptSync(RetryPolicy.java:177)
+		at com.azure.core.http.policy.RetryPolicy.attemptSync(RetryPolicy.java:190)
+		at com.azure.core.http.policy.RetryPolicy.processSync(RetryPolicy.java:127)
+		at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+		at com.azure.core.http.policy.HttpPipelineSyncPolicy.processSync(HttpPipelineSyncPolicy.java:37)
+		at com.azure.core.http.policy.UserAgentPolicy.processSync(UserAgentPolicy.java:154)
+		at com.azure.core.http.HttpPipelineNextSyncPolicy.processSync(HttpPipelineNextSyncPolicy.java:41)
+		at com.azure.core.http.HttpPipeline.sendSync(HttpPipeline.java:121)
+		at com.azure.core.implementation.http.rest.SyncRestProxy.send(SyncRestProxy.java:49)
+		at com.azure.core.implementation.http.rest.SyncRestProxy.invoke(SyncRestProxy.java:74)
+		at com.azure.core.implementation.http.rest.RestProxyBase.invoke(RestProxyBase.java:110)
+		at com.azure.core.http.rest.RestProxy.invoke(RestProxy.java:95)
+		at com.sun.proxy.$Proxy14.getSecret(Unknown Source)
+		at com.azure.security.keyvault.secrets.implementation.SecretClientImpl.getSecretWithResponse(SecretClientImpl.java:544)
+		at com.azure.security.keyvault.secrets.SecretClient.getSecretWithResponse(SecretClient.java:229)
+		at com.azure.security.keyvault.secrets.SecretClient.getSecret(SecretClient.java:171)
+		at com.viohalco.KeyVault.getSecretValue(KeyVault.java:18)
+		at com.viohalco.DurableFunctionsAutopilot.sayHello(DurableFunctionsAutopilot.java:63)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+		at com.microsoft.azure.functions.worker.broker.JavaMethodInvokeInfo.invoke(JavaMethodInvokeInfo.java:22)
+		at com.microsoft.azure.functions.worker.broker.EnhancedJavaMethodExecutorImpl.execute(EnhancedJavaMethodExecutorImpl.java:55)
+		at com.microsoft.azure.functions.worker.broker.JavaFunctionBroker.invokeMethod(JavaFunctionBroker.java:61)
+		at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:33)
+		at com.microsoft.azure.functions.worker.handler.InvocationRequestHandler.execute(InvocationRequestHandler.java:10)
+		at com.microsoft.azure.functions.worker.handler.MessageHandler.handle(MessageHandler.java:45)
+		at com.microsoft.azure.functions.worker.JavaWorkerClient$StreamingMessagePeer.lambda$onNext$0(JavaWorkerClient.java:92)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+		at java.base/java.lang.Thread.run(Thread.java:834)

@@ -1,0 +1,16 @@
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] OUTBOUND SETTINGS: ack=false settings={ENABLE_PUSH=0, MAX_CONCURRENT_STREAMS=0, INITIAL_WINDOW_SIZE=1048576, MAX_HEADER_LIST_SIZE=8192}
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] OUTBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=983041
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND SETTINGS: ack=false settings={︃=1, INITIAL_WINDOW_SIZE=4194304, MAX_FRAME_SIZE=4194304, MAX_HEADER_LIST_SIZE=8192}
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] OUTBOUND SETTINGS: ack=true
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=4128769
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] OUTBOUND HEADERS: streamId=3 headers=GrpcHttp2OutboundHeaders[:authority: 127.0.0.1:4001, :path: /TaskHubSidecarService/StartInstance, :method: POST, :scheme: http, content-type: application/grpc, te: trailers, user-agent: grpc-java-netty/1.46.0, grpc-accept-encoding: gzip] streamDependency=0 weight=16 exclusive=false padding=0 endStream=false
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] OUTBOUND DATA: streamId=3 padding=0 endStream=true length=86 bytes=00000000510a2465643862353764312d623832392d346261642d623038322d363764333931326536306563121f4175746f70696c6f7450726f66696c6553796e...
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND SETTINGS: ack=true
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=86
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND PING: ack=false bytes=0
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] OUTBOUND PING: ack=true bytes=0
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND HEADERS: streamId=3 headers=GrpcHttp2ResponseHeaders[:status: 200, content-type: application/grpc, grpc-accept-encoding: identity,deflate,gzip, accept-encoding: identity,gzip] padding=0 endStream=false
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND DATA: streamId=3 padding=0 endStream=false length=43 bytes=00000000260a2465643862353764312d623832392d346261642d623038322d363764333931326536306563
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] OUTBOUND PING: ack=false bytes=1234
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND HEADERS: streamId=3 headers=GrpcHttp2ResponseHeaders[grpc-status: 0, grpc-message: ] padding=0 endStream=true
+[id: 0x46eaf4d5, L:/127.0.0.1:55517 - R:/127.0.0.1:4001] INBOUND PING: ack=true bytes=1234
