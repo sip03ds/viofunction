@@ -24,7 +24,6 @@ public class GraphManager {
 		log.info("Getting all MDE Devices...");
 		String response = null;
 		ArrayList<JSONObject> mdeDevicesToHandleManually = null;
-		
 		ArrayList<JSONObject> mdeDevices = getGraphWrapper().getMdeDevices();
 		if (mdeDevices != null) {
 			log.info(""+mdeDevices.size());
@@ -37,21 +36,23 @@ public class GraphManager {
 			response = getResponseForMdeDevicesToHandleManually(mdeDevicesToHandleManually);
 		}		
 		else {
-			response = "{ \"manuallyConfiguredMdeAadDevices\": 0 }";
+			response = "{ \"manuallyConfiguredMdeAadDevicesLength\": 0 }";
 		}
 		return response;
 	}
 	
 	private String getResponseForMdeDevicesToHandleManually(ArrayList<JSONObject> mdeDevicesToHandleManually) {
 		 StringBuilder sb = new StringBuilder(" { ");
-		 sb.append(" { \"manuallyConfiguredMdeAadDevicesLength\": "+mdeDevicesToHandleManually.size()+" , ");
-		 sb.append(" \"manuallyConfiguredMdeAadDevices\": [ ");
+		 sb.append(" \"manuallyConfiguredMdeAadDevicesLength\": "+mdeDevicesToHandleManually.size()+" , ");
+		 sb.append(" \"manuallyConfiguredMdeAadDevices\": ");
+		 sb.append(" [ ");
 		 for (JSONObject mdeDeviceToHandleManually :  mdeDevicesToHandleManually) {
-         	sb.append(mdeDeviceToHandleManually.toString());
+         	sb.append( mdeDeviceToHandleManually.toString() );
          	sb.append(",");
          }
 		 sb.delete(sb.lastIndexOf(","),sb.lastIndexOf(",")+1);
-		 sb.append(" ] } ");
+		 sb.append(" ] ");
+		 sb.append(" } ");
 		 return sb.toString();
 	}
 	

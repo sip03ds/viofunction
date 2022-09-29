@@ -1,0 +1,1746 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Call_Azure_Function_that_Assigns_Autopilot_Profiles_Async": {
+                "inputs": {
+                    "method": "POST",
+                    "queries": {
+                        "@variables('keyVaultName')": "@variables('KeyVaultNameValue')"
+                    },
+                    "uri": "@variables('assignProfilesToAutopilotDevicesFunctionUrl')"
+                },
+                "runAfter": {
+                    "Check_Azure_Function_Delete_for_Autopilot_Devices_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "Call_Azure_Function_that_Assigns_MDE_Tags_Async": {
+                "inputs": {
+                    "method": "POST",
+                    "queries": {
+                        "@variables('keyVaultName')": "@variables('KeyVaultNameValue')"
+                    },
+                    "uri": "@variables('assignMdeTagFunctionUrl')"
+                },
+                "runAfter": {
+                    "Check_Azure_Function_Assign_Autopilot_Profiles": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "Call_Azure_Function_that_Deletes_Autopilot_Devices_Async": {
+                "inputs": {
+                    "method": "POST",
+                    "queries": {
+                        "@variables('keyVaultName')": "@variables('KeyVaultNameValue')"
+                    },
+                    "uri": "@variables('deleteAutopilotDevicesUrlAsync')"
+                },
+                "runAfter": {
+                    "Check_Azure_Function_Sync_for_Managed_Devices_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "Call_Azure_Function_that_Syncs_Managed_Devices_Async": {
+                "inputs": {
+                    "method": "POST",
+                    "queries": {
+                        "@variables('keyVaultName')": "@variables('KeyVaultNameValue')"
+                    },
+                    "uri": "@variables('syncManagedDevicesUrlAsync')"
+                },
+                "runAfter": {
+                    "Initialize_Email_address": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "Check_Azure_Function_Assign_Autopilot_Profiles": {
+                "actions": {
+                    "Assign_Autopilot_Profile_Status_Function_URL": {
+                        "inputs": {
+                            "name": "assignProfilesToAutopilotDevicesStatusFunctionUrl",
+                            "value": "@body('Parse_Async_Assign_Autopilot_Profle')?['statusQueryGetUri']"
+                        },
+                        "runAfter": {
+                            "Parse_Async_Assign_Autopilot_Profle": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "SetVariable"
+                    },
+                    "Parse_Async_Assign_Autopilot_Profle": {
+                        "inputs": {
+                            "content": "@body('Call_Azure_Function_that_Assigns_Autopilot_Profiles_Async')",
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "purgeHistoryDeleteUri": {
+                                        "type": "string"
+                                    },
+                                    "sendEventPostUri": {
+                                        "type": "string"
+                                    },
+                                    "statusQueryGetUri": {
+                                        "type": "string"
+                                    },
+                                    "terminatePostUri": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "runAfter": {},
+                        "type": "ParseJson"
+                    },
+                    "Until_Assign_Autopilot_Profile_Status_COMPLETE": {
+                        "actions": {
+                            "Call_Azure_Function_that_Assigns_Autopilot_STATUS": {
+                                "inputs": {
+                                    "method": "GET",
+                                    "uri": "@variables('assignProfilesToAutopilotDevicesStatusFunctionUrl')"
+                                },
+                                "runAfter": {},
+                                "type": "Http"
+                            },
+                            "If_Azure_Function_Status_returns_COMPLETE": {
+                                "actions": {
+                                    "Check_if_we_have_Unassigned_Profile_on_Autopilot_Devices": {
+                                        "actions": {
+                                            "For_each_Autopilot_Device_with_unassigned_Profile": {
+                                                "actions": {
+                                                    "Check_Email_Receiving_Limit_Reference_has_changed": {
+                                                        "actions": {
+                                                            "Delay_to_overcome_Exchange_On_Line_Receive_Limits": {
+                                                                "inputs": {
+                                                                    "interval": {
+                                                                        "count": 60,
+                                                                        "unit": "Minute"
+                                                                    }
+                                                                },
+                                                                "runAfter": {
+                                                                    "Update_Email_Limit_Reference": [
+                                                                        "Succeeded"
+                                                                    ]
+                                                                },
+                                                                "type": "Wait"
+                                                            },
+                                                            "Update_Email_Limit_Reference": {
+                                                                "inputs": {
+                                                                    "name": "emailLimitReference",
+                                                                    "value": "@variables('emailLimitValidator')"
+                                                                },
+                                                                "runAfter": {},
+                                                                "type": "SetVariable"
+                                                            }
+                                                        },
+                                                        "expression": {
+                                                            "and": [
+                                                                {
+                                                                    "not": {
+                                                                        "equals": [
+                                                                            "@variables('emailLimitValidator')",
+                                                                            "@variables('emailLimitReference')"
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        "runAfter": {
+                                                            "Set_emailLimitValidator": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "If"
+                                                    },
+                                                    "Check_Email_Send_Limit": {
+                                                        "actions": {
+                                                            "Email_Gemini_to_Create_Ticket_for_Autopilot_Device": {
+                                                                "inputs": {
+                                                                    "body": {
+                                                                        "Body": "<p>The autopilot device with serial @{items('For_each_Autopilot_Device_with_unassigned_Profile')?['SerialNumber']} does not have associated an Autopilot Profile.<br>\nYou need to navigate to Microsoft Endpoint Manager and set Autopilot Profile for the device.<br>\n<br>\nPlease do not forget to use your T2 account for accessing Microsoft Endpoint Manager.&nbsp;</p>",
+                                                                        "Importance": "Normal",
+                                                                        "Subject": "Microsoft Endpoint Manager - Configure Autopilot Profile",
+                                                                        "To": "@variables('emailAddress')"
+                                                                    },
+                                                                    "host": {
+                                                                        "connection": {
+                                                                            "name": "@parameters('$connections')['office365']['connectionId']"
+                                                                        }
+                                                                    },
+                                                                    "method": "post",
+                                                                    "path": "/v2/Mail"
+                                                                },
+                                                                "runAfter": {},
+                                                                "type": "ApiConnection"
+                                                            },
+                                                            "Increment_Email_Send_Counter": {
+                                                                "inputs": {
+                                                                    "name": "emailSendCounter",
+                                                                    "value": 1
+                                                                },
+                                                                "runAfter": {
+                                                                    "Email_Gemini_to_Create_Ticket_for_Autopilot_Device": [
+                                                                        "Succeeded"
+                                                                    ]
+                                                                },
+                                                                "type": "IncrementVariable"
+                                                            }
+                                                        },
+                                                        "else": {
+                                                            "actions": {
+                                                                "Delay_to_overcome_Exchange_On_Line_Send_Limits": {
+                                                                    "inputs": {
+                                                                        "interval": {
+                                                                            "count": 1,
+                                                                            "unit": "Minute"
+                                                                        }
+                                                                    },
+                                                                    "runAfter": {},
+                                                                    "type": "Wait"
+                                                                },
+                                                                "Email_Gemini_to_Create_Ticket_for_Autopilot_Device_": {
+                                                                    "inputs": {
+                                                                        "body": {
+                                                                            "Body": "<p>The autopilot device with serial @{items('For_each_Autopilot_Device_with_unassigned_Profile')?['SerialNumber']} does not have associated an Autopilot Profile.<br>\nYou need to navigate to Microsoft Endpoint Manager and set Autopilot Profile for the device.<br>\n<br>\nPlease do not forget to use your T2 account for accessing Microsoft Endpoint Manager.&nbsp;</p>",
+                                                                            "Importance": "Normal",
+                                                                            "Subject": "Microsoft Endpoint Manager - Configure Autopilot Profile",
+                                                                            "To": "@variables('emailAddress')"
+                                                                        },
+                                                                        "host": {
+                                                                            "connection": {
+                                                                                "name": "@parameters('$connections')['office365']['connectionId']"
+                                                                            }
+                                                                        },
+                                                                        "method": "post",
+                                                                        "path": "/v2/Mail"
+                                                                    },
+                                                                    "runAfter": {
+                                                                        "Delay_to_overcome_Exchange_On_Line_Send_Limits": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "ApiConnection"
+                                                                },
+                                                                "Reset_Email_Send_Counter": {
+                                                                    "inputs": {
+                                                                        "name": "emailSendCounter",
+                                                                        "value": 1
+                                                                    },
+                                                                    "runAfter": {
+                                                                        "Email_Gemini_to_Create_Ticket_for_Autopilot_Device_": [
+                                                                            "Succeeded"
+                                                                        ]
+                                                                    },
+                                                                    "type": "SetVariable"
+                                                                }
+                                                            }
+                                                        },
+                                                        "expression": {
+                                                            "and": [
+                                                                {
+                                                                    "less": [
+                                                                        "@variables('emailSendCounter')",
+                                                                        25
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        "runAfter": {
+                                                            "Check_Email_Receiving_Limit_Reference_has_changed": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "If"
+                                                    },
+                                                    "Increment_unassignedProfileCounter": {
+                                                        "inputs": {
+                                                            "name": "unassignedProfileCounter",
+                                                            "value": 1
+                                                        },
+                                                        "runAfter": {},
+                                                        "type": "IncrementVariable"
+                                                    },
+                                                    "Set_emailLimitValidator": {
+                                                        "inputs": {
+                                                            "name": "emailLimitValidator",
+                                                            "value": "@div(variables('unassignedProfileCounter'),variables('emailLimit'))"
+                                                        },
+                                                        "runAfter": {
+                                                            "Increment_unassignedProfileCounter": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "SetVariable"
+                                                    }
+                                                },
+                                                "foreach": "@body('Parse_Logical_Response_from_Autopilot_Profile_Assignment')?['unassignedAutoplotProfiles']",
+                                                "runAfter": {},
+                                                "runtimeConfiguration": {
+                                                    "concurrency": {
+                                                        "repetitions": 1
+                                                    }
+                                                },
+                                                "type": "Foreach"
+                                            }
+                                        },
+                                        "expression": {
+                                            "and": [
+                                                {
+                                                    "greater": [
+                                                        "@variables('unassignedAutopilotProfilesLength')",
+                                                        0
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "runAfter": {
+                                            "Set_Unassigned_Profile_Autopilot_Devices": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "If"
+                                    },
+                                    "Parse_HTTP_Response_from_Autopilot_Profile_Assignment": {
+                                        "inputs": {
+                                            "content": "@body('Call_Azure_Function_that_Assigns_Autopilot_STATUS')",
+                                            "schema": {
+                                                "properties": {
+                                                    "createdTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "customStatus": {
+                                                        "type": "string"
+                                                    },
+                                                    "input": {
+                                                        "type": "string"
+                                                    },
+                                                    "instanceId": {
+                                                        "type": "string"
+                                                    },
+                                                    "lastUpdatedTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "output": {},
+                                                    "runtimeStatus": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Set_Assign_Autopilot_Profile_Complete": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "ParseJson"
+                                    },
+                                    "Parse_Logical_Response_from_Autopilot_Profile_Assignment": {
+                                        "inputs": {
+                                            "content": "@body('Parse_HTTP_Response_from_Autopilot_Profile_Assignment')?['output']",
+                                            "schema": {
+                                                "properties": {
+                                                    "unassignedAutoplotProfiles": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "AadDeviceName": {
+                                                                    "type": "string"
+                                                                },
+                                                                "SerialNumber": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "SerialNumber",
+                                                                "AadDeviceName"
+                                                            ],
+                                                            "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "unassignedAutoplotProfilesLength": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Parse_HTTP_Response_from_Autopilot_Profile_Assignment": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "ParseJson"
+                                    },
+                                    "Set_Assign_Autopilot_Profile_Complete": {
+                                        "inputs": {
+                                            "name": "assignProfilesToAutopilotDevicesStatusFunctionUrlComplete",
+                                            "value": "@true"
+                                        },
+                                        "runAfter": {},
+                                        "type": "SetVariable"
+                                    },
+                                    "Set_Unassigned_Profile_Autopilot_Devices": {
+                                        "inputs": {
+                                            "name": "unassignedAutopilotProfilesLength",
+                                            "value": "@body('Parse_Logical_Response_from_Autopilot_Profile_Assignment')?['unassignedAutoplotProfilesLength']"
+                                        },
+                                        "runAfter": {
+                                            "Parse_Logical_Response_from_Autopilot_Profile_Assignment": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "SetVariable"
+                                    }
+                                },
+                                "expression": {
+                                    "and": [
+                                        {
+                                            "equals": [
+                                                "",
+                                                200
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "runAfter": {
+                                    "Call_Azure_Function_that_Assigns_Autopilot_STATUS": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "If"
+                            }
+                        },
+                        "expression": "@equals(variables('assignProfilesToAutopilotDevicesStatusFunctionUrlComplete'), true)",
+                        "limit": {
+                            "count": 60,
+                            "timeout": "PT1H"
+                        },
+                        "runAfter": {
+                            "Assign_Autopilot_Profile_Status_Function_URL": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Until"
+                    }
+                },
+                "else": {
+                    "actions": {
+                        "Notify_that_the_Assign_Autopilot_Profile_Function_did_not_work": {
+                            "inputs": {
+                                "body": {
+                                    "messageBody": "<p>Return code was not expected!<br>\n<br>\nFunction: @{variables('assignProfilesToAutopilotDevicesFunctionUrl')}<br>\nReturned: @{outputs('Call_Azure_Function_that_Assigns_Autopilot_Profiles_Async')['statusCode']}<br>\nBody Response: @{body('Call_Azure_Function_that_Assigns_Autopilot_Profiles_Async')}</p>",
+                                    "recipient": "distathopoulos@steelmet.gr"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['teams']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Chat with Flow bot')}"
+                            },
+                            "runAfter": {},
+                            "type": "ApiConnection"
+                        }
+                    }
+                },
+                "expression": {
+                    "and": [
+                        {
+                            "equals": [
+                                "@outputs('Call_Azure_Function_that_Assigns_Autopilot_Profiles_Async')['statusCode']",
+                                201
+                            ]
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Call_Azure_Function_that_Assigns_Autopilot_Profiles_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "If"
+            },
+            "Check_Azure_Function_Delete_for_Autopilot_Devices_Async": {
+                "actions": {
+                    "Assign_Delete_Devices_Status_Function_URL": {
+                        "inputs": {
+                            "name": "deleteAutopilotDevicesStatusUrl",
+                            "value": "@body('Parse_Delete_Autopilot_Devices')?['statusQueryGetUri']"
+                        },
+                        "runAfter": {
+                            "Parse_Delete_Autopilot_Devices": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "SetVariable"
+                    },
+                    "Parse_Delete_Autopilot_Devices": {
+                        "inputs": {
+                            "content": "@body('Call_Azure_Function_that_Deletes_Autopilot_Devices_Async')",
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "purgeHistoryDeleteUri": {
+                                        "type": "string"
+                                    },
+                                    "sendEventPostUri": {
+                                        "type": "string"
+                                    },
+                                    "statusQueryGetUri": {
+                                        "type": "string"
+                                    },
+                                    "terminatePostUri": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "runAfter": {},
+                        "type": "ParseJson"
+                    },
+                    "Until_Delete_Devices_Status_COMPLETE": {
+                        "actions": {
+                            "Call_Azure_Function_that_Deletes_Autopilot_Devices_STATUS": {
+                                "inputs": {
+                                    "method": "GET",
+                                    "uri": "@variables('deleteAutopilotDevicesStatusUrl')"
+                                },
+                                "runAfter": {},
+                                "type": "Http"
+                            },
+                            "If_Azure_Function_that_Deletes_Autopilot_Devices_Status_returns_COMPLETE": {
+                                "actions": {
+                                    "If_Autopilot_Devices_require_Attention": {
+                                        "actions": {
+                                            "For_each_Autopilot_Device_Deleted": {
+                                                "actions": {
+                                                    "Notify_that_the_following_autopilot_device_was_deleted": {
+                                                        "inputs": {
+                                                            "body": {
+                                                                "messageBody": "<p>@{items('For_each_Autopilot_Device_Deleted')?['AADDeviceName']}<br>\n@{items('For_each_Autopilot_Device_Deleted')?['AutopilotSerial']}<br>\n@{items('For_each_Autopilot_Device_Deleted')?['ManagedDeviceName']}<br>\n</p>",
+                                                                "recipient": "distathopoulos@steelmet.gr"
+                                                            },
+                                                            "host": {
+                                                                "connection": {
+                                                                    "name": "@parameters('$connections')['teams']['connectionId']"
+                                                                }
+                                                            },
+                                                            "method": "post",
+                                                            "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Chat with Flow bot')}"
+                                                        },
+                                                        "runAfter": {},
+                                                        "type": "ApiConnection"
+                                                    }
+                                                },
+                                                "foreach": "@body('Parse_Logical_Response_from_Delete_Autopilot_Device')?['deletedDevicesThatRequireAttention']",
+                                                "runAfter": {},
+                                                "type": "Foreach"
+                                            }
+                                        },
+                                        "expression": {
+                                            "and": [
+                                                {
+                                                    "greater": [
+                                                        "@variables('deletedDevicesThatRequireAttentionLength')",
+                                                        0
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "runAfter": {
+                                            "Set_Autopilot_Devices_that_Require_Attention_Length": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "If"
+                                    },
+                                    "Parse_HTTP_Response_from_Autopilot_Device_Delete_": {
+                                        "inputs": {
+                                            "content": "@body('Call_Azure_Function_that_Deletes_Autopilot_Devices_STATUS')",
+                                            "schema": {
+                                                "properties": {
+                                                    "createdTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "customStatus": {
+                                                        "type": "string"
+                                                    },
+                                                    "input": {
+                                                        "type": "string"
+                                                    },
+                                                    "instanceId": {
+                                                        "type": "string"
+                                                    },
+                                                    "lastUpdatedTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "output": {},
+                                                    "runtimeStatus": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Set_Delete_Autopilot_Device_Sync_Complete": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "ParseJson"
+                                    },
+                                    "Parse_Logical_Response_from_Delete_Autopilot_Device": {
+                                        "inputs": {
+                                            "content": "@body('Parse_HTTP_Response_from_Autopilot_Device_Delete_')?['output']",
+                                            "schema": {
+                                                "properties": {
+                                                    "deletedDevicesThatRequireAttention": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "AADDeviceName": {
+                                                                    "type": "string"
+                                                                },
+                                                                "AADDeviceObjectId": {
+                                                                    "type": "string"
+                                                                },
+                                                                "AutopilotSerial": {
+                                                                    "type": "string"
+                                                                },
+                                                                "ManagedDeviceId": {
+                                                                    "type": "string"
+                                                                },
+                                                                "ManagedDeviceName": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "deletedDevicesThatRequireAttentionLength": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Parse_HTTP_Response_from_Autopilot_Device_Delete_": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "ParseJson"
+                                    },
+                                    "Set_Autopilot_Devices_that_Require_Attention_Length": {
+                                        "inputs": {
+                                            "name": "deletedDevicesThatRequireAttentionLength",
+                                            "value": "@body('Parse_Logical_Response_from_Delete_Autopilot_Device')?['deletedDevicesThatRequireAttentionLength']"
+                                        },
+                                        "runAfter": {
+                                            "Parse_Logical_Response_from_Delete_Autopilot_Device": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "SetVariable"
+                                    },
+                                    "Set_Delete_Autopilot_Device_Sync_Complete": {
+                                        "inputs": {
+                                            "name": "managedDeviceFunctionUrlComplete",
+                                            "value": "@true"
+                                        },
+                                        "runAfter": {},
+                                        "type": "SetVariable"
+                                    }
+                                },
+                                "expression": {
+                                    "and": [
+                                        {
+                                            "equals": [
+                                                "@outputs('Call_Azure_Function_that_Deletes_Autopilot_Devices_STATUS')['statusCode']",
+                                                200
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "runAfter": {
+                                    "Call_Azure_Function_that_Deletes_Autopilot_Devices_STATUS": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "If"
+                            }
+                        },
+                        "expression": "@equals(variables('managedDeviceFunctionUrlComplete'), true)",
+                        "limit": {
+                            "count": 60,
+                            "timeout": "PT1H"
+                        },
+                        "runAfter": {
+                            "Assign_Delete_Devices_Status_Function_URL": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Until"
+                    }
+                },
+                "else": {
+                    "actions": {
+                        "Notify_that_the_Azure_Function_Delete_Autopilot_Devices_Async_did_not_work": {
+                            "inputs": {
+                                "body": {
+                                    "messageBody": "<p>Return code was not expected!<br>\n<br>\nFunction: @{variables('syncManagedDevicesUrlAsync')}<br>\nReturned: @{outputs('Call_Azure_Function_that_Deletes_Autopilot_Devices_Async')['statusCode']}<br>\nBody Response: @{body('Call_Azure_Function_that_Deletes_Autopilot_Devices_Async')}</p>",
+                                    "recipient": "distathopoulos@steelmet.gr"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['teams']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Chat with Flow bot')}"
+                            },
+                            "runAfter": {},
+                            "type": "ApiConnection"
+                        }
+                    }
+                },
+                "expression": {
+                    "and": [
+                        {
+                            "equals": [
+                                "@outputs('Call_Azure_Function_that_Deletes_Autopilot_Devices_Async')['statusCode']",
+                                201
+                            ]
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Call_Azure_Function_that_Deletes_Autopilot_Devices_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "If"
+            },
+            "Check_Azure_Function_MDE_Tag_Async": {
+                "actions": {
+                    "Assign_Azure_Function_MDE_Tag_Status_Function_URL": {
+                        "inputs": {
+                            "name": "assignMdeTagStatusFunctionUrl",
+                            "value": "@body('Parse_Async_Assign_MDE_Tag')?['statusQueryGetUri']"
+                        },
+                        "runAfter": {
+                            "Parse_Async_Assign_MDE_Tag": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "SetVariable"
+                    },
+                    "Parse_Async_Assign_MDE_Tag": {
+                        "inputs": {
+                            "content": "@body('Call_Azure_Function_that_Assigns_MDE_Tags_Async')",
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "purgeHistoryDeleteUri": {
+                                        "type": "string"
+                                    },
+                                    "sendEventPostUri": {
+                                        "type": "string"
+                                    },
+                                    "statusQueryGetUri": {
+                                        "type": "string"
+                                    },
+                                    "terminatePostUri": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "runAfter": {},
+                        "type": "ParseJson"
+                    },
+                    "Until_MDE_Tag_Status_COMPLETE": {
+                        "actions": {
+                            "Call_Azure_Function_that_Assigns_MDE_Tag_STATUS": {
+                                "inputs": {
+                                    "method": "GET",
+                                    "uri": "@variables('assignMdeTagStatusFunctionUrl')"
+                                },
+                                "runAfter": {},
+                                "type": "Http"
+                            },
+                            "If_MDE_Tag_Status_returns_COMPLETE": {
+                                "actions": {
+                                    "Check_if_we_have_to_Manually_Configure_MDE_AAD_Devices": {
+                                        "actions": {
+                                            "For_each_MDE_Device": {
+                                                "actions": {
+                                                    "Email_Gemini_to_Create_Ticket_for_MDE_Device": {
+                                                        "inputs": {
+                                                            "body": {
+                                                                "Body": "<p>The device @{items('For_each_MDE_Device')?['computerDnsName']} does not have Device Tag confgured.<br>\nYou need to navigate to Microsoft Defender for Endpoint and set Device Tag for the device.<br>\n<br>\nPlease do not forget to use your T1 account for accessing Microsoft Defender for Endpoint.&nbsp;</p>",
+                                                                "Importance": "Normal",
+                                                                "Subject": "Microsoft Defender for Endpoint Manager - Configure MDE Device Tag",
+                                                                "To": "@variables('emailAddress')"
+                                                            },
+                                                            "host": {
+                                                                "connection": {
+                                                                    "name": "@parameters('$connections')['office365']['connectionId']"
+                                                                }
+                                                            },
+                                                            "method": "post",
+                                                            "path": "/v2/Mail"
+                                                        },
+                                                        "runAfter": {},
+                                                        "type": "ApiConnection"
+                                                    }
+                                                },
+                                                "foreach": "@body('Parse_Logical_Response_from_MDE_Tag_Assignment')?['manuallyConfiguredMdeAadDevices']",
+                                                "runAfter": {},
+                                                "type": "Foreach"
+                                            }
+                                        },
+                                        "expression": {
+                                            "and": [
+                                                {
+                                                    "greater": [
+                                                        "@variables('manuallyConfiguredMdeAadDevicesLength')",
+                                                        0
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "runAfter": {
+                                            "Set_Manually_Configured_MDE_AAD_Devices_Length": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "If"
+                                    },
+                                    "Parse_HTTP_Response_from_MDE_Tag_Assignment": {
+                                        "inputs": {
+                                            "content": "@body('Call_Azure_Function_that_Assigns_MDE_Tag_STATUS')",
+                                            "schema": {
+                                                "properties": {
+                                                    "createdTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "customStatus": {
+                                                        "type": "string"
+                                                    },
+                                                    "input": {
+                                                        "type": "string"
+                                                    },
+                                                    "instanceId": {
+                                                        "type": "string"
+                                                    },
+                                                    "lastUpdatedTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "output": {
+                                                        "type": "string"
+                                                    },
+                                                    "runtimeStatus": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Set_MDE_Tag_Complete": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "ParseJson"
+                                    },
+                                    "Parse_Logical_Response_from_MDE_Tag_Assignment": {
+                                        "inputs": {
+                                            "content": "@body('Parse_HTTP_Response_from_MDE_Tag_Assignment')?['output']",
+                                            "schema": {
+                                                "properties": {
+                                                    "manuallyConfiguredMdeAadDevices": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "aadDeviceId": {},
+                                                                "agentVersion": {},
+                                                                "computerDnsName": {},
+                                                                "defenderAvStatus": {},
+                                                                "deviceValue": {},
+                                                                "exposureLevel": {},
+                                                                "firstSeen": {},
+                                                                "healthStatus": {},
+                                                                "id": {
+                                                                    "type": "string"
+                                                                },
+                                                                "ipAddresses": {
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "ipAddress": {},
+                                                                            "macAddress": {},
+                                                                            "operationalStatus": {},
+                                                                            "type": {}
+                                                                        },
+                                                                        "type": "object"
+                                                                    },
+                                                                    "type": "array"
+                                                                },
+                                                                "isAadJoined": {},
+                                                                "lastExternalIpAddress": {},
+                                                                "lastIpAddress": {},
+                                                                "lastSeen": {},
+                                                                "machineTags": {},
+                                                                "managedBy": {},
+                                                                "managedByStatus": {},
+                                                                "onboardingStatus": {},
+                                                                "osArchitecture": {},
+                                                                "osBuild": {},
+                                                                "osPlatform": {},
+                                                                "osProcessor": {},
+                                                                "osVersion": {},
+                                                                "rbacGroupId": {},
+                                                                "rbacGroupName": {},
+                                                                "riskScore": {},
+                                                                "version": {},
+                                                                "vmMetadata": {}
+                                                            },
+                                                            "required": [
+                                                                "id"
+                                                            ],
+                                                            "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "manuallyConfiguredMdeAadDevicesLength": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Parse_HTTP_Response_from_MDE_Tag_Assignment": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "ParseJson"
+                                    },
+                                    "Set_MDE_Tag_Complete": {
+                                        "inputs": {
+                                            "name": "mdeTagfunctionUrlComplete",
+                                            "value": "@true"
+                                        },
+                                        "runAfter": {},
+                                        "type": "SetVariable"
+                                    },
+                                    "Set_Manually_Configured_MDE_AAD_Devices_Length": {
+                                        "inputs": {
+                                            "name": "manuallyConfiguredMdeAadDevicesLength",
+                                            "value": "@body('Parse_Logical_Response_from_MDE_Tag_Assignment')?['manuallyConfiguredMdeAadDevicesLength']"
+                                        },
+                                        "runAfter": {
+                                            "Parse_Logical_Response_from_MDE_Tag_Assignment": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "SetVariable"
+                                    }
+                                },
+                                "expression": {
+                                    "and": [
+                                        {
+                                            "equals": [
+                                                "@outputs('Call_Azure_Function_that_Assigns_MDE_Tag_STATUS')['statusCode']",
+                                                200
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "runAfter": {
+                                    "Call_Azure_Function_that_Assigns_MDE_Tag_STATUS": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "If"
+                            }
+                        },
+                        "expression": "@equals(variables('mdeTagfunctionUrlComplete'), true)",
+                        "limit": {
+                            "count": 60,
+                            "timeout": "PT1H"
+                        },
+                        "runAfter": {
+                            "Assign_Azure_Function_MDE_Tag_Status_Function_URL": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Until"
+                    }
+                },
+                "else": {
+                    "actions": {
+                        "Notify_that_the_Assign_MDE_Tag_Function_did_not_work": {
+                            "inputs": {
+                                "body": {
+                                    "messageBody": "<p>Return code was not expected!<br>\n<br>\nFunction: @{variables('assignMdeTagFunctionUrl')}<br>\nReturned: @{outputs('Call_Azure_Function_that_Assigns_MDE_Tags_Async')['statusCode']}<br>\nBody Response: @{body('Call_Azure_Function_that_Assigns_MDE_Tags_Async')}</p>",
+                                    "recipient": "distathopoulos@steelmet.gr"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['teams']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Chat with Flow bot')}"
+                            },
+                            "runAfter": {},
+                            "type": "ApiConnection"
+                        }
+                    }
+                },
+                "expression": {
+                    "and": [
+                        {
+                            "equals": [
+                                "@outputs('Call_Azure_Function_that_Assigns_MDE_Tags_Async')['statusCode']",
+                                201
+                            ]
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Call_Azure_Function_that_Assigns_MDE_Tags_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "If"
+            },
+            "Check_Azure_Function_Sync_for_Managed_Devices_Async": {
+                "actions": {
+                    "Assign_Managed_Devices_Status_Function_URL": {
+                        "inputs": {
+                            "name": "syncManagedDevicesStatusUrl",
+                            "value": "@body('Parse_Async_Managed_Devices')?['statusQueryGetUri']"
+                        },
+                        "runAfter": {
+                            "Parse_Async_Managed_Devices": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "SetVariable"
+                    },
+                    "Parse_Async_Managed_Devices": {
+                        "inputs": {
+                            "content": "@body('Call_Azure_Function_that_Syncs_Managed_Devices_Async')",
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "purgeHistoryDeleteUri": {
+                                        "type": "string"
+                                    },
+                                    "sendEventPostUri": {
+                                        "type": "string"
+                                    },
+                                    "statusQueryGetUri": {
+                                        "type": "string"
+                                    },
+                                    "terminatePostUri": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "runAfter": {},
+                        "type": "ParseJson"
+                    },
+                    "Until_Managed_Devices_Status_COMPLETE": {
+                        "actions": {
+                            "Call_Azure_Function_that_Syncs_Managed_Devices_STATUS": {
+                                "inputs": {
+                                    "method": "GET",
+                                    "uri": "@variables('syncManagedDevicesStatusUrl')"
+                                },
+                                "runAfter": {},
+                                "type": "Http"
+                            },
+                            "If_Azure_Function_that_Syncs_Managed_Devices_Status_returns_COMPLETE": {
+                                "actions": {
+                                    "If_Devices_to_Manually_Configure_exist": {
+                                        "actions": {
+                                            "For_each_Managed_Device_to_Manually_Configure": {
+                                                "actions": {
+                                                    "Email_Gemini_to_Create_Ticket_for_Managed_Device": {
+                                                        "inputs": {
+                                                            "body": {
+                                                                "Body": "<p>The device @{items('For_each_Managed_Device_to_Manually_Configure')?['name']} does not have Device Category confgured.<br>\nYou need to navigate to Microsoft Endpoint Manager and set Device Category for the device.<br>\n<br>\nPlease do not forget to use your T2 account for accessing Microsoft Endpoint Manager.&nbsp;</p>",
+                                                                "Importance": "Normal",
+                                                                "Subject": "Microsoft Endpoint Manager - Configure Device Category",
+                                                                "To": "@variables('emailAddress')"
+                                                            },
+                                                            "host": {
+                                                                "connection": {
+                                                                    "name": "@parameters('$connections')['office365']['connectionId']"
+                                                                }
+                                                            },
+                                                            "method": "post",
+                                                            "path": "/v2/Mail"
+                                                        },
+                                                        "runAfter": {},
+                                                        "type": "ApiConnection"
+                                                    }
+                                                },
+                                                "foreach": "@body('Parse_Logical_Response_from_Managed_Device_Assignment')?['managedDevicesToManuallyConfigure']",
+                                                "runAfter": {},
+                                                "type": "Foreach"
+                                            }
+                                        },
+                                        "expression": {
+                                            "and": [
+                                                {
+                                                    "greater": [
+                                                        "@variables('managedDevicesToManuallyConfigureLength')",
+                                                        0
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "runAfter": {
+                                            "Set_Managed_Devices_To_Manually_Configure_Length": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "If"
+                                    },
+                                    "Parse_HTTP_Response_from_Managed_Device_Sync_Assignment": {
+                                        "inputs": {
+                                            "content": "@body('Call_Azure_Function_that_Syncs_Managed_Devices_STATUS')",
+                                            "schema": {
+                                                "properties": {
+                                                    "createdTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "customStatus": {
+                                                        "type": "string"
+                                                    },
+                                                    "input": {
+                                                        "type": "string"
+                                                    },
+                                                    "instanceId": {
+                                                        "type": "string"
+                                                    },
+                                                    "lastUpdatedTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "output": {},
+                                                    "runtimeStatus": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Set_Managed_Device_Sync_Complete": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "ParseJson"
+                                    },
+                                    "Parse_Logical_Response_from_Managed_Device_Assignment": {
+                                        "inputs": {
+                                            "content": "@body('Parse_HTTP_Response_from_Managed_Device_Sync_Assignment')?['output']",
+                                            "schema": {
+                                                "properties": {
+                                                    "managedDevicesToManuallyConfigure": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "managedDevicesToManuallyConfigureLength": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "runAfter": {
+                                            "Parse_HTTP_Response_from_Managed_Device_Sync_Assignment": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "ParseJson"
+                                    },
+                                    "Set_Managed_Device_Sync_Complete": {
+                                        "inputs": {
+                                            "name": "managedDeviceFunctionUrlComplete",
+                                            "value": "@true"
+                                        },
+                                        "runAfter": {},
+                                        "type": "SetVariable"
+                                    },
+                                    "Set_Managed_Devices_To_Manually_Configure_Length": {
+                                        "inputs": {
+                                            "name": "managedDevicesToManuallyConfigureLength",
+                                            "value": "@body('Parse_Logical_Response_from_Managed_Device_Assignment')?['managedDevicesToManuallyConfigureLength']"
+                                        },
+                                        "runAfter": {
+                                            "Parse_Logical_Response_from_Managed_Device_Assignment": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "SetVariable"
+                                    }
+                                },
+                                "expression": {
+                                    "and": [
+                                        {
+                                            "equals": [
+                                                "@outputs('Call_Azure_Function_that_Syncs_Managed_Devices_STATUS')['statusCode']",
+                                                200
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "runAfter": {
+                                    "Call_Azure_Function_that_Syncs_Managed_Devices_STATUS": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "If"
+                            }
+                        },
+                        "expression": "@equals(variables('managedDeviceFunctionUrlComplete'), true)",
+                        "limit": {
+                            "count": 60,
+                            "timeout": "PT1H"
+                        },
+                        "runAfter": {
+                            "Assign_Managed_Devices_Status_Function_URL": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Until"
+                    }
+                },
+                "else": {
+                    "actions": {
+                        "Notify_that_the_Azure_Function_Sync_for_Managed_Devices_Async_did_not_work": {
+                            "inputs": {
+                                "body": {
+                                    "messageBody": "<p>Return code was not expected!<br>\n<br>\nFunction: @{variables('syncManagedDevicesUrlAsync')}<br>\nReturned: @{outputs('Call_Azure_Function_that_Syncs_Managed_Devices_Async')['statusCode']}<br>\nBody Response: @{body('Call_Azure_Function_that_Syncs_Managed_Devices_Async')}</p>",
+                                    "recipient": "distathopoulos@steelmet.gr"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['teams']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Chat with Flow bot')}"
+                            },
+                            "runAfter": {},
+                            "type": "ApiConnection"
+                        }
+                    }
+                },
+                "expression": {
+                    "and": [
+                        {
+                            "equals": [
+                                "@outputs('Call_Azure_Function_that_Syncs_Managed_Devices_Async')['statusCode']",
+                                201
+                            ]
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Call_Azure_Function_that_Syncs_Managed_Devices_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "If"
+            },
+            "Initialize_Assign_Autopilot_Profile_Complete": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "assignProfilesToAutopilotDevicesStatusFunctionUrlComplete",
+                            "type": "boolean",
+                            "value": "@false"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Delete_Autopilot_Devices_Status_Function_URL": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Assign_Autopilot_Profile_Status_Function_URL": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "assignProfilesToAutopilotDevicesStatusFunctionUrl",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Managed_Device_Function_URL_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Assign_Autopilot_Profiles_Function_URL": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "assignProfilesToAutopilotDevicesFunctionUrl",
+                            "type": "string",
+                            "value": "https://viohalcofunctions-20220907075420754.azurewebsites.net/api/startautopilotprofilesynchronization"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Autopilot_Devices_Deleted_that_require_Attention": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Autopilot_Devices_Deleted_that_require_Attention": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "deletedDevicesThatRequireAttentionLength",
+                            "type": "integer",
+                            "value": -1
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Delete_Autopilot_Devices_Function_URL_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Configure_MDE_AAD_Devices_Length": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "manuallyConfiguredMdeAadDevicesLength",
+                            "type": "integer",
+                            "value": -1
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_MDE_Tag_Function_Complete": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Delete_Autopilot_Device_Complete": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "deleteAutopilotDeviceFunctionUrlComplete",
+                            "type": "boolean",
+                            "value": "@false"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Managed_Device_Complete": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Delete_Autopilot_Devices_Function_URL_Async": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "deleteAutopilotDevicesUrlAsync",
+                            "type": "string",
+                            "value": "https://viohalcofunctions-20220907075420754.azurewebsites.net/api/StartAutopilotDeviceDeletion"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Devices_to_Manually_Configure": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Delete_Autopilot_Devices_Status_Function_URL": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "deleteAutopilotDevicesStatusUrl",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Managed_Device_Status_Function_URL": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Devices_to_Manually_Configure": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "managedDevicesToManuallyConfigureLength",
+                            "type": "integer",
+                            "value": -1
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Key_Vault_Name_Value": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Email_Limit": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "emailLimit",
+                            "type": "integer",
+                            "value": 2000
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Configure_MDE_AAD_Devices_Length": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Email_Limit_Reference": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "emailLimitReference",
+                            "type": "integer",
+                            "value": 0
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Email_Limit_Validator": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Email_Limit_Validator": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "emailLimitValidator",
+                            "type": "integer",
+                            "value": 0
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Email_Limit": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Email_Send_Counter": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "emailSendCounter",
+                            "type": "integer",
+                            "value": 1
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Email_Limit_Reference": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Email_address": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "emailAddress",
+                            "type": "string",
+                            "value": "distathopoulos@steelmet.gr"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Email_Send_Counter": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Key_Vault_Name": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "keyVaultName",
+                            "type": "string",
+                            "value": "keyVaultName"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "InitializeVariable"
+            },
+            "Initialize_Key_Vault_Name_Value": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "KeyVaultNameValue",
+                            "type": "string",
+                            "value": "kv-st-weu-snt-p"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Key_Vault_Name": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_MDE_Tag_Function_Complete": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "mdeTagfunctionUrlComplete",
+                            "type": "boolean",
+                            "value": "@false"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_MDE_Tag_Status_Function_URL": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_MDE_Tag_Function_URL_Async": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "assignMdeTagFunctionUrl",
+                            "type": "string",
+                            "value": "https://viohalcofunctions-20220907075420754.azurewebsites.net/api/startdefenderdevicesynchronization"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Unassigned_Profile_Counter": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_MDE_Tag_Status_Function_URL": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "assignMdeTagStatusFunctionUrl",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_MDE_Tag_Function_URL_Async": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Managed_Device_Complete": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "managedDeviceFunctionUrlComplete",
+                            "type": "boolean",
+                            "value": "@false"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Assign_Autopilot_Profile_Complete": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Managed_Device_Function_URL_Async": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "syncManagedDevicesUrlAsync",
+                            "type": "string",
+                            "value": "https://viohalcofunctions-20220907075420754.azurewebsites.net/api/StartManageDeviceCategorySynchronization"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Assign_Autopilot_Profiles_Function_URL": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Managed_Device_Status_Function_URL": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "syncManagedDevicesStatusUrl",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Assign_Autopilot_Profile_Status_Function_URL": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Unassigned_Profile_Autopilot_Devices": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "unassignedAutopilotProfilesLength",
+                            "type": "integer",
+                            "value": -1
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Delete_Autopilot_Device_Complete": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Unassigned_Profile_Counter": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "unassignedProfileCounter",
+                            "type": "integer",
+                            "value": 0
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Unassigned_Profile_Autopilot_Devices": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "Recurrence": {
+                "evaluatedRecurrence": {
+                    "frequency": "Day",
+                    "interval": 1,
+                    "startTime": "2022-08-19T23:00:00",
+                    "timeZone": "GTB Standard Time"
+                },
+                "recurrence": {
+                    "frequency": "Day",
+                    "interval": 1,
+                    "startTime": "2022-08-19T23:00:00",
+                    "timeZone": "GTB Standard Time"
+                },
+                "type": "Recurrence"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "office365": {
+                    "connectionId": "/subscriptions/12b57be7-07dc-4f80-95b6-18061b57c035/resourceGroups/rg-st-weu-oms-p/providers/Microsoft.Web/connections/office365",
+                    "connectionName": "office365",
+                    "id": "/subscriptions/12b57be7-07dc-4f80-95b6-18061b57c035/providers/Microsoft.Web/locations/westeurope/managedApis/office365"
+                },
+                "teams": {
+                    "connectionId": "/subscriptions/12b57be7-07dc-4f80-95b6-18061b57c035/resourceGroups/rg-st-weu-oms-p/providers/Microsoft.Web/connections/teams-5",
+                    "connectionName": "teams-5",
+                    "id": "/subscriptions/12b57be7-07dc-4f80-95b6-18061b57c035/providers/Microsoft.Web/locations/westeurope/managedApis/teams"
+                }
+            }
+        }
+    }
+}

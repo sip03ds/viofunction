@@ -45,7 +45,7 @@ public class DurableFunctionsDefenderDevices {
 	            log.info("Started Orchestrator Function");
 	            log.info("keyvault name:");
 	            log.info(keyvault);
-	            result += ctx.callActivity("SynchronizeDefenderDevices", keyvault, String.class).await() + ", ";
+	            result += ctx.callActivity("SynchronizeDefenderDevices", keyvault, String.class).await() ;
 	            return result;
 	        });
 	    }
@@ -62,6 +62,9 @@ public class DurableFunctionsDefenderDevices {
 	        
 	        GraphManager api = new GraphManager( keyVault.getSecretValue("tenantId"), keyVault.getSecretValue("InTuneApp"), keyVault.getSecretValue("InTuneAppSecret") );
 	        String response = api.setDeviceCategoryToMdeDevices(log); 
+	        
+	        log.info("RESPONDING:");
+	        log.info(response);
 	        
 	        long endTime   = System.nanoTime();
 	        long totalTime = endTime - startTime;
