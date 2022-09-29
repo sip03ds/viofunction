@@ -61,7 +61,6 @@ public class DurableFunctionsManaged {
         KeyVault keyVault = new KeyVault(name);
         Logger log = functionContext.getLogger();
         log.info("Started Activity Function");
-        
         GraphManager api = new GraphManager( keyVault.getSecretValue("tenantId"), keyVault.getSecretValue("InTuneApp"), keyVault.getSecretValue("InTuneAppSecret") );
         ArrayList<ManagedDevice> managedDevicesToManuallyConfigure = api.setDeviceCategoryToManagedDevices(log);
         String response = null;

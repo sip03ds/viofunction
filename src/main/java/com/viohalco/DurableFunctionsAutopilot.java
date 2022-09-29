@@ -25,18 +25,9 @@ public class DurableFunctionsAutopilot {
         final String query = req.getQueryParameters().get("keyVaultName");
         final String keyvault = req.getBody().orElse(query);
         DurableTaskClient client = durableContext.getClient();
-
-
-        //final String guid = "8441e2cc-cff3-4a76-ac7e-18872b7349fb";
-        //OrchestrationMetadata metadata = client.getInstanceMetadata(guid,false);
-        //if (metadata.isRunning()) {
-        //    return req.createResponseBuilder(HttpStatus.CONFLICT).body("An instance with ID: "+guid+" already exists.").build();
-        //}
-
         String instanceId = client.scheduleNewOrchestrationInstance("AutopilotProfileSynchronization", keyvault);
         context.getLogger().info("Created new Java orchestration with instance ID = " + instanceId);
         return durableContext.createCheckStatusResponse(req, instanceId);
-
     }
 
     /**
@@ -46,17 +37,13 @@ public class DurableFunctionsAutopilot {
      */
     @FunctionName("AutopilotProfileSynchronization")
     public String autopilotProfileSynchronizationOrchestrator(@DurableOrchestrationTrigger(name = "runtimeState") String runtimeState,ExecutionContext functionContext) {
-
         return OrchestrationRunner.loadAndRun(runtimeState, ctx -> {
-
             String keyvault = ctx.getInput(String.class);
-
             String result = "";
             Logger log = functionContext.getLogger();
             log.info("Started Orchestrator Function");
             log.info("keyvault name:");
-            log.info(keyvault);
-            
+            log.info(keyvault); 
             result += ctx.callActivity("SynchronizeAutopilotProfiles", keyvault, String.class).await() + ", ";
             return result;
         });
@@ -67,20 +54,18 @@ public class DurableFunctionsAutopilot {
      */
     @FunctionName("SynchronizeAutopilotProfiles")
     public String synchronizeAutopilotProfiles(@DurableActivityTrigger(name = "name") String name,ExecutionContext functionContext) {
-        KeyVault keyVault = new KeyVault(name);
-
+    	long startTime = System.nanoTime();
+    	KeyVault keyVault = new KeyVault(name);
         Logger log = functionContext.getLogger();
         log.info("Started Activity Function");
-        
         GraphManager api = new GraphManager( keyVault.getSecretValue("tenantId"), keyVault.getSecretValue("InTuneApp"), keyVault.getSecretValue("InTuneAppSecret") );
-        long startTime = System.nanoTime();
         ArrayList<WindowsAutopilotDeviceIdentity> unassignedAutopilotProfiles = api.assignProfilesToAutopilotDevices(log,startTime);
         String response;
         if ( unassignedAutopilotProfiles != null ) {
             log.info("Devices that need manual actions: "+unassignedAutopilotProfiles.size());
             StringBuilder sb = new StringBuilder(" { ");
-            sb.append(" \"unassignedAutoplotProfilesLength\": "+unassignedAutopilotProfiles.size()+" , ");
-            sb.append(" \"unassignedAutoplotProfiles\": [ ");
+            sb.append(" \"unassignedAutopilotProfilesLength\": "+unassignedAutopilotProfiles.size()+" , ");
+            sb.append(" \"unassignedAutopilotProfiles\": [ ");
             for (WindowsAutopilotDeviceIdentity autopilotProfile :  unassignedAutopilotProfiles) {
             	sb.append(api.getJsonDataFromWindowsAutopilotDeviceIdentity(autopilotProfile));
             	sb.append(",");

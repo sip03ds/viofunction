@@ -1,8 +1,11 @@
 package com.viohalco;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.json.JSONObject;
 
 import com.azure.identity.ClientSecretCredential;
 import com.azure.identity.ClientSecretCredentialBuilder;
@@ -27,15 +30,35 @@ import com.microsoft.graph.requests.WindowsAutopilotDeploymentProfileCollectionP
 import com.microsoft.graph.requests.WindowsAutopilotDeploymentProfileCollectionRequestBuilder;
 import com.microsoft.graph.requests.WindowsAutopilotDeviceIdentityCollectionPage;
 import com.microsoft.graph.requests.WindowsAutopilotDeviceIdentityCollectionRequestBuilder;
+import java.util.logging.Logger;
 
 import okhttp3.Request;
 
-public class GraphWrapper {
+public class GraphWrapper  {
 	public GraphWrapper(String tenantId,String appId,String appSecret) {
+		this.tenantId = tenantId;
+		this.appId = appId;
+		this.appSecret = appSecret;
 		clientSecretCredential = new ClientSecretCredentialBuilder().clientId(appId).clientSecret(appSecret).tenantId(tenantId).build();
 		List<String> graphUserScopes = Arrays.asList("https://graph.microsoft.com/.default");
 		tokenCredAuthProvider = new TokenCredentialAuthProvider(graphUserScopes, clientSecretCredential);
 		graphClient = GraphServiceClient.builder().authenticationProvider(tokenCredAuthProvider).buildClient();
+	}
+	
+	public String addTag(String mdeDeviceId, String tag, Logger log) {
+		RegisteredApp graph = new RegisteredApp(new Token(),this.tenantId , this.appId , this.appSecret);
+		return graph.addTagToMdeDevice(mdeDeviceId, tag, log);
+	}
+	
+	public ArrayList<JSONObject> getMdeDevices() { 
+		RegisteredApp graph = new RegisteredApp(new Token(),this.tenantId , this.appId , this.appSecret);
+		ArrayList<JSONObject> mdeDevicesJson = new ArrayList<JSONObject>();
+		try {
+			mdeDevicesJson = graph.getData("https://api.securitycenter.microsoft.com", "https://api.securitycenter.microsoft.com/api/machines", "GET", null,true,null);
+		} catch (IOException | InterruptedException e) {
+			mdeDevicesJson = null;
+		}
+		return mdeDevicesJson;
 	}
 	
 	public ArrayList<WindowsAutopilotDeploymentProfile> getAutopilotProfiles() { 
@@ -229,4 +252,9 @@ public class GraphWrapper {
 	private final ClientSecretCredential clientSecretCredential;
 	private final TokenCredentialAuthProvider tokenCredAuthProvider;
 	private final GraphServiceClient<Request> graphClient;
+	
+	private String appId;
+	private String tenantId;
+	private String appSecret;
+	
 }

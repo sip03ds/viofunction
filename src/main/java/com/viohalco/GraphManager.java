@@ -1,10 +1,13 @@
 package com.viohalco;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import com.google.gson.JsonPrimitive;
 import com.microsoft.graph.models.Device;
 import com.microsoft.graph.models.DeviceCategory;
@@ -17,6 +20,218 @@ public class GraphManager {
 	public GraphManager(String tenantId,String appId,String appSecret) {
 		setGraphWrapper( new GraphWrapper(tenantId, appId, appSecret) );
 	}	
+	public String setDeviceCategoryToMdeDevices(Logger log) { 
+		log.info("Getting all MDE Devices...");
+		String response = null;
+		ArrayList<JSONObject> mdeDevicesToHandleManually = null;
+		
+		ArrayList<JSONObject> mdeDevices = getGraphWrapper().getMdeDevices();
+		if (mdeDevices != null) {
+			log.info(""+mdeDevices.size());
+			log.info("Extracting MDE Devices that are registered on AAD and do not have tags");
+			ArrayList<JSONObject> mdeDevicesJsonUntagged = getUntaggedAadMdeDevices(mdeDevices);
+			log.info(""+mdeDevicesJsonUntagged.size());
+			mdeDevicesToHandleManually = setTagsToMdeDevices(mdeDevicesJsonUntagged,log);
+		}
+		if ( mdeDevicesToHandleManually.size() > 0 ) {
+			response = getResponseForMdeDevicesToHandleManually(mdeDevicesToHandleManually);
+		}		
+		else {
+			response = "{ \"manuallyConfiguredMdeAadDevices\": 0 }";
+		}
+		return response;
+	}
+	
+	private String getResponseForMdeDevicesToHandleManually(ArrayList<JSONObject> mdeDevicesToHandleManually) {
+		 StringBuilder sb = new StringBuilder(" { ");
+		 sb.append(" { \"manuallyConfiguredMdeAadDevicesLength\": "+mdeDevicesToHandleManually.size()+" , ");
+		 sb.append(" \"manuallyConfiguredMdeAadDevices\": [ ");
+		 for (JSONObject mdeDeviceToHandleManually :  mdeDevicesToHandleManually) {
+         	sb.append(mdeDeviceToHandleManually.toString());
+         	sb.append(",");
+         }
+		 sb.delete(sb.lastIndexOf(","),sb.lastIndexOf(",")+1);
+		 sb.append(" ] } ");
+		 return sb.toString();
+	}
+	
+	private ArrayList<JSONObject> setTagsToMdeDevices(ArrayList<JSONObject> mdeDevicesJsonUntagged,Logger log) {
+		ArrayList<JSONObject> mdeDevicesToHandleManually = new ArrayList<JSONObject>();
+		for ( JSONObject mdeDevice : mdeDevicesJsonUntagged ) {			
+			mdeDevicesToHandleManually = setMdeTagFromAadDevice( mdeDevicesToHandleManually , mdeDevice  , log );
+		}
+		return mdeDevicesToHandleManually;
+	}
+	
+	private ArrayList<JSONObject> setMdeTagFromAadDevice(ArrayList<JSONObject> mdeDevicesToHandleManually , JSONObject mdeDevice  , Logger log ) {
+		String aadDeviceId = null;
+		try { 
+			aadDeviceId = mdeDevice.getString("aadDeviceId");
+			if (!StringUtils.isBlank(aadDeviceId)) {
+				Device aadDevice = getGraphWrapper().getAadDeviceByDeviceId(aadDeviceId);
+				if ( aadDevice != null ) {
+					log.info("Processing: "+aadDevice.displayName);
+					mdeDevicesToHandleManually = processAadDeviceCategoryForMdeDevice(mdeDevicesToHandleManually , mdeDevice, aadDevice , log );
+				}
+				else {
+					log.info("Graph API did not return an AAD Device...");
+					mdeDevicesToHandleManually.add(mdeDevice);
+				}
+			}
+			else {
+				log.info("AAD device ID was not found...");
+				mdeDevicesToHandleManually.add(mdeDevice);
+			}
+		}
+		catch (org.json.JSONException e) {
+			log.info("AAD device was not found...");
+			mdeDevicesToHandleManually.add(mdeDevice);
+		}
+		return mdeDevicesToHandleManually;
+	}
+	
+	private ArrayList<JSONObject> processAadDeviceCategoryForMdeDevice(ArrayList<JSONObject> mdeDevicesToHandleManually , JSONObject mdeDevice, Device aadDevice , Logger log ) {
+		try {
+			String deviceCategory = aadDevice.deviceCategory;
+			if ( !StringUtils.isBlank(deviceCategory ) ) {
+				log.info("Trying to set Device Category: "+deviceCategory+" to device: "+aadDevice.displayName+" mdeid: "+mdeDevice.getString("id"));
+				String response = getGraphWrapper().addTag( mdeDevice.getString("id") , deviceCategory , log);
+				log.info("response: "+response);	
+			}
+			else {
+				// we need to seach from AAD device 
+				log.info("Device Category was not found on AAD device: "+aadDevice.displayName);
+				List<String> physicalIds = aadDevice.physicalIds;
+				boolean addedTag = false;
+				for ( int i = 0 ; i < physicalIds.size() ; i++ ) {
+					String physicalId = physicalIds.get(i);
+					if ( !StringUtils.isBlank(physicalId) ) {
+						if ( physicalId.contains("[OrderId]:")) {
+							int length = physicalId.length();
+							int index = physicalId.indexOf(":");
+							String groupTag = physicalId.substring(index+1,length);
+							log.info("extracted groupTag: "+groupTag);
+							String deviceCategoryFromGroupTag = getDeviceCategory(groupTag.trim());
+							if ( !StringUtils.isBlank(deviceCategoryFromGroupTag) ) {
+								log.info("Setting tag to: "  + mdeDevice.getString("id") +" tag: "+deviceCategoryFromGroupTag+" device: "+aadDevice.displayName);
+								String response = getGraphWrapper().addTag(mdeDevice.getString("id"), deviceCategoryFromGroupTag, log);
+								log.info("RESPONSE: "+response);
+								addedTag = true;
+							}
+						}
+					}
+				}	
+				if ( !addedTag ) {
+					mdeDevicesToHandleManually.add(mdeDevice);
+				}
+			}
+		}
+		catch (	NullPointerException e ) {
+			log.info("The device "+aadDevice.displayName+" does not have device category");
+			mdeDevicesToHandleManually.add(mdeDevice);
+		}	
+		return mdeDevicesToHandleManually;
+	}
+	
+	
+	private ArrayList<JSONObject> getUntaggedAadMdeDevices(ArrayList<JSONObject> mdeDevicesJson) {
+		ArrayList<JSONObject> untaggedMdeDevicesJson = new ArrayList<JSONObject>();
+		for ( JSONObject mdeDevice : mdeDevicesJson ) {
+			boolean isUntagged = false;
+			String aadDeviceId = null;
+			JSONArray tags = null;
+			try { 
+				aadDeviceId = mdeDevice.getString("aadDeviceId");
+			}
+			catch (org.json.JSONException e) {
+				//e.printStackTrace();
+			}
+			if (!StringUtils.isBlank(aadDeviceId)) {
+				tags = mdeDevice.getJSONArray("machineTags");
+				if ( tags.length() <= 0 ) {
+					isUntagged = true;
+				}
+				else {
+					isUntagged = !tagsAreValid(tags);	
+				}
+			}
+			if ( isUntagged ) {
+				untaggedMdeDevicesJson.add(mdeDevice);
+			}
+		}
+		return untaggedMdeDevicesJson;
+	}
+	
+	private static boolean tagsAreValid(JSONArray tags) {
+		boolean tagsAreValid = false;
+		for (int i = 0 ; i < tags.length() ; i++) {
+			String tag = tags.getString(i);
+			tagsAreValid = tagIsValid(tag);
+			if ( tagsAreValid ) {
+				break ;
+			}
+		}
+		return tagsAreValid;
+	}
+	
+	private static boolean tagIsValid(String tag) {
+		boolean isValid = false;
+		switch (tag) {
+		case "IT Department of BRIDGNORTH ALUMINIUM LTD":
+			isValid = true;
+			break;
+		case "IT Department of CABLEL":
+			isValid = true;
+			break;
+		case "IT Department of ELVAL":
+			isValid = true;
+			break;
+		case "IT Department of ETEM BG":
+			isValid = true;
+			break;
+		case "IT Department of ETEM GR":
+			isValid = true;
+			break;
+		case "IT Department of HALCOR":
+			isValid = true;
+			break;
+		case "IT Department of ICME":
+			isValid = true;
+			break;
+		case "IT Department of SIDENOR":
+			isValid = true;
+			break;
+		case "IT Department of SOFIA MED":
+			isValid = true;
+			break;
+		case "IT Department of STEELMET":
+			isValid = true;
+			break;
+		case "IT Department of SIDMA":
+			isValid = true;
+			break;
+		case "IT Department of TEKA":
+			isValid = true;
+			break;
+		case "IT Department of VIOMAL":
+			isValid = true;
+			break;
+		case "IT Department of CPW":
+			isValid = true;
+			break;
+		case "IT Department of CENERGY":
+			isValid = true;
+			break;
+		case "IT Department of METALIGN GR":
+			isValid = true;
+			break;
+		case "IT Department of TEPROMKC":
+			isValid = true;
+			break;
+		}
+		return isValid;
+	}
+	
 	public ArrayList<WindowsAutopilotDeviceIdentity> assignProfilesToAutopilotDevices(Logger log, long startTime) {
 		ArrayList<WindowsAutopilotDeviceIdentity> autopilotDevicesToManuallyConfigure = new ArrayList<WindowsAutopilotDeviceIdentity>();
 		log.info("Getting all Autopilot Devices...");
@@ -261,6 +476,63 @@ public class GraphManager {
 			break;
 		}
 		return groupTag;
+	}
+	private String getDeviceCategory(String groupTag) {
+		String deviceCategory = null;
+		switch(groupTag) {
+		case "CLOUD_BRIDGNORTH_ALUMINIUM_LTD":
+			deviceCategory = "IT Department of BRIDGNORTH ALUMINIUM LTD";
+			break;
+		case "CLOUD_CABLEL":
+			deviceCategory = "IT Department of CABLEL";
+			break;
+		case "CLOUD_ELVAL":
+			deviceCategory = "IT Department of ELVAL";
+			break;
+		case "CLOUD_ETEM_BG":
+			deviceCategory = "IT Department of ETEM BG";
+			break;
+		case "CLOUD_ETEM_GR":
+			deviceCategory = "IT Department of ETEM GR";
+			break;
+		case "CLOUD_HALCOR":
+			deviceCategory = "IT Department of HALCOR";
+			break;
+		case "CLOUD_ICME":
+			deviceCategory = "IT Department of ICME";
+			break;
+		case "CLOUD_SIDENOR":
+			deviceCategory = "IT Department of SIDENOR";
+			break;
+		case "CLOUD_SOFIA_MED":
+			deviceCategory = "IT Department of SOFIA MED";
+			break;
+		case "CLOUD_STEELMET":
+			deviceCategory = "IT Department of STEELMET";
+			break;
+		case "CLOUD_SIDMA":
+			deviceCategory = "IT Department of SIDMA";
+			break;
+		case "CLOUD_TEKA":
+			deviceCategory = "IT Department of TEKA";
+			break;
+		case "CLOUD_VIOMAL":
+			deviceCategory = "IT Department of VIOMAL";
+			break;
+		case "CLOUD_CPW":
+			deviceCategory = "IT Department of CPW";
+			break;
+		case "CLOUD_CENERGY":
+			deviceCategory = "IT Department of CENERGY";
+			break;
+		case "CLOUD_METALIGN_GR":
+			deviceCategory = "IT Department of METALIGN GR";
+			break;
+		case "CLOUD_TEPROMKC":
+			deviceCategory = "IT Department of TEPROMKC";
+			break;
+		}
+		return deviceCategory;
 	}
 	
 	private String getGroupTag(String deviceCategory) {
