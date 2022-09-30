@@ -253,17 +253,19 @@ The **white** links display out of the box connections used by the products.
 The **yellow** links display the conceptual link we will try to create using strings for distinguishing each company. 
 
 ## Automated Migration
-You can create powershell scripts that run on a regular basis on a task scheduler, but in the cloud era, setting up redundant servers and maintaining them is a **waste of time***.
+You can create powershell scripts that run on a regular basis on a task scheduler, but in the cloud era, setting up redundant servers and maintaining them is a **waste of time**.
 I wanted a solution that has minimal next to zero maintenance, minimal cost that runs secure and does the job and in case anything goes wrong to let me know, so I can fix it.
 To achieve the goal I decided to deploy different cloud technologies (and as I found out during the process, I also had to come across their limitations).
+
 The process is wrapped around a Logic App that runs once per day on a consumption plan and costs ~10 Euros per month.
+Logic App is using an M365 account to send emails and notifications to MS Teams. Add ~6 Euros on the account for the M365 account.
 The Logic App calls a few Azure Durable Functions that make HTTP Async Calls (We have some long running transactions that take more than 10 minutes hence the need of Elastic Premium SKU). 
 The cost of Durable Functions run on Elastic Premium Tier App Service Plan and cost around ~200 Euros per month.
 Durable functions make calls to Graph API and Security Graph API and I have registered an app on AAD for this purpose. This comes free with AAD license.
 Last but not least, I am using an Azure Key Vault to hide the app secret that Azure Functions are using.
 The cost of Key Vault is less than a Euro per month. All deployments take place in West Europe.
-As the time of writing (20/9/2022) the total cost in West Europe is **~211 Euros**. 
-I doubt if you can find an consistent administrator doing the job and a server costing that much on a monthly basis. 
+As the time of writing (20/9/2022) the total monthly cost in West Europe is **~220 Euros**.
+I doubt if you can find a consistent administrator doing the job and a server costing that much on a monthly basis.
 
 ### Logic App
 
