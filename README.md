@@ -267,6 +267,18 @@ The cost of Key Vault is less than a Euro per month. All deployments take place 
 As the time of writing (20/9/2022) the total monthly cost in West Europe is **~220 Euros**.
 I doubt if you can find a consistent administrator doing the job and a server costing that much on a monthly basis.
 
+How do we achieve migration? 
+High level the process is the following: 
+1. The logic app runs once per day.
+2. During the run, Azure Functions help us make calls to Graph API via the Registered App.
+3. Functions get all the device entities (AAD,MEM managed device, MEM autopilot and MDE) from every platform using Java 11 API.
+4. Functions try to match the entities attributes as displayed on the diagram.
+5. In case there are missing attributes functions try to update the attributes based on certain rules (e.g. using the hostname , or the domain name).
+6. For devices that cannot be patched, we create a JSON list that is returned to the logic App. 
+7. Logic app parses the response and prepares an email for each device along with the action required (e.g. update device category on MEM device).
+   As we may have a large amount of devices, we may hit Exchange Online limitations, so the logic app has timers to send emails respecting Exchange Online limitations.
+   In case there is an error (e.g. an HTTP call is not made), the Logic app will notify me by posting a message to MS Teams.
+
 ### Logic App
 
 ### Registering an App

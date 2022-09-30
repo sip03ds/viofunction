@@ -444,7 +444,7 @@
                             "inputs": {
                                 "body": {
                                     "messageBody": "<p>Return code was not expected!<br>\n<br>\nFunction: @{variables('assignProfilesToAutopilotDevicesFunctionUrl')}<br>\nReturned: @{outputs('Call_Azure_Function_that_Assigns_Autopilot_Profiles_Async')['statusCode']}<br>\nBody Response: @{body('Call_Azure_Function_that_Assigns_Autopilot_Profiles_Async')}</p>",
-                                    "recipient": "distathopoulos@steelmet.gr"
+                                    "recipient": "me@myself.com"
                                 },
                                 "host": {
                                     "connection": {
@@ -537,7 +537,7 @@
                                                         "inputs": {
                                                             "body": {
                                                                 "messageBody": "<p>@{items('For_each_Autopilot_Device_Deleted')?['AADDeviceName']}<br>\n@{items('For_each_Autopilot_Device_Deleted')?['AutopilotSerial']}<br>\n@{items('For_each_Autopilot_Device_Deleted')?['ManagedDeviceName']}<br>\n</p>",
-                                                                "recipient": "distathopoulos@steelmet.gr"
+                                                                "recipient": "me@myself.com"
                                                             },
                                                             "host": {
                                                                 "connection": {
@@ -711,7 +711,7 @@
                             "inputs": {
                                 "body": {
                                     "messageBody": "<p>Return code was not expected!<br>\n<br>\nFunction: @{variables('syncManagedDevicesUrlAsync')}<br>\nReturned: @{outputs('Call_Azure_Function_that_Deletes_Autopilot_Devices_Async')['statusCode']}<br>\nBody Response: @{body('Call_Azure_Function_that_Deletes_Autopilot_Devices_Async')}</p>",
-                                    "recipient": "distathopoulos@steelmet.gr"
+                                    "recipient": "me@myself.com"
                                 },
                                 "host": {
                                     "connection": {
@@ -1011,7 +1011,7 @@
                             "inputs": {
                                 "body": {
                                     "messageBody": "<p>Return code was not expected!<br>\n<br>\nFunction: @{variables('assignMdeTagFunctionUrl')}<br>\nReturned: @{outputs('Call_Azure_Function_that_Assigns_MDE_Tags_Async')['statusCode']}<br>\nBody Response: @{body('Call_Azure_Function_that_Assigns_MDE_Tags_Async')}</p>",
-                                    "recipient": "distathopoulos@steelmet.gr"
+                                    "recipient": "me@myself.com"
                                 },
                                 "host": {
                                     "connection": {
@@ -1268,7 +1268,7 @@
                             "inputs": {
                                 "body": {
                                     "messageBody": "<p>Return code was not expected!<br>\n<br>\nFunction: @{variables('syncManagedDevicesUrlAsync')}<br>\nReturned: @{outputs('Call_Azure_Function_that_Syncs_Managed_Devices_Async')['statusCode']}<br>\nBody Response: @{body('Call_Azure_Function_that_Syncs_Managed_Devices_Async')}</p>",
-                                    "recipient": "distathopoulos@steelmet.gr"
+                                    "recipient": "me@myself.com"
                                 },
                                 "host": {
                                     "connection": {
@@ -1525,7 +1525,7 @@
                         {
                             "name": "emailAddress",
                             "type": "string",
-                            "value": "distathopoulos@steelmet.gr"
+                            "value": "me@myself.com"
                         }
                     ]
                 },
