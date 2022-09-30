@@ -53,23 +53,12 @@ This group can be Dynamic , Privileged Access Group (if you want to use Privileg
 
 Each AAD Device entity in Graph API has many attributes ([https://graph.microsoft.com/beta/devices](https://graph.microsoft.com/beta/devices))
 For our project we will focus on the following ones:
--** id ** - a unique GGUID Id for distinguishing the object in AAD
--** deviceId **- a unique GGUID Id for linking the object with other entities in Graph API
--** displayName ** - a string - usually it's the hostname of the device (without the domain name)
--** Physical Id **- a list of strings - with physical hardware characteristics of the device
--** ZTDID Id **- Zero Touch Device Id - part of the physical id list - containing the autopilot device id
--** Order Id **- part of the physical id list - containing a user defined string
-
-
-
-"id": "002d3589-bf8b-402f-917f-151416fb4573",
-"deviceId": "0d7fe7c6-6437-4b36-8678-6f98b1031f6e",
-"displayName": "JXWGF2S",
-"[ZTDID]:12944ab2-bdfe-45b9-9171-8d1c95e41ac4",
-
-    "azureActiveDirectoryDeviceId": "0d7fe7c6-6437-4b36-8678-6f98b1031f6e",
-    "azureAdDeviceId": "0d7fe7c6-6437-4b36-8678-6f98b1031f6e",
-
+-**id** is a unique GGUID Id for distinguishing the object in AAD.
+-**deviceId ** is a unique GGUID Id for linking the object with other entities in Graph API.
+-**displayName ** is a string and usually it's the hostname of the device (without the domain name).
+-**Physical Id ** is a list of strings with physical hardware characteristics of the device.
+-**ZTDID Id ** Zero Touch Device Id is part of the physical id list, containing the autopilot device id.
+-**Order Id ** is part of the physical id list - containing a user defined string.
 
 ### Microsoft Endpoint Configuration (MEM)
 On Endpoint Configuration Manager we create a Scope Tag per company.
