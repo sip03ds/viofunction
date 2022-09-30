@@ -106,12 +106,12 @@ Security Graph API for MDE([https://api.securitycenter.microsoft.com/api/machine
 ## Linking the devices among AAD, MEM , Autopilot and MDE
 
 Using the attributes for each entity we attempt to make the links displayed on the following figure:
-![Entity Links](https://myoctocat.com/assets/images/base-octocat.svg)
+![Entity Links](https://raw.githubusercontent.com/sip03ds/viofunction/main/src/main/resources/images/Graph_Api_Links.png)
 
 The white links display out of the box connections used by the products.
 The yellow links display the conceptual link we will try to create using strings for distinguishing each company. 
 
-## Automating Linking
+## Automated Linking
 
 ### Logic App
 
