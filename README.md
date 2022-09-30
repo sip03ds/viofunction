@@ -1,4 +1,4 @@
-# Using a Logic App with Azure Durable Functions for automating Device Synchronization among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
+# Using a Logic App with Azure Durable Functions for migrating Administration Realms for Devices among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
 I have worked for an group organization that has many subsidiaries. 
 Every subsidiary has its own IT department that should have a different degree of freedom for performing actions on Cloud MS Products. 
 All companies exist under the same tenant.
@@ -155,7 +155,7 @@ Administrators can override user selection by changing the device category attri
 
 Later, we will automate the process of filling in device cateogry by using some Managed Device attributes ([https://graph.microsoft.com/beta/deviceManagement/managedDevices](https://graph.microsoft.com/beta/deviceManagement/managedDevices)).
 The ones we will focus on are:
-- **{id}** is a unique GUID Id for distinguishing the object in Endpoint Manager.
+- **{id}** is a unique GUID Id for distinguishing the object in MEM.
 - **{deviceName}** is a string and usually it's the hostname of the device (without domain name).
 - **{userPrincipalName}** is a string usually its the UPN of the primary user of the device. It contains the domain name of the company and we can use it to find the company supporting the device
 - **{serialNumber}** is a string specifying the serial number of the device.
@@ -207,20 +207,38 @@ As soon as the computer boots, the right profile and any predefined applications
 
 For existing devices we will have to migrate them on the right profile based on their computer name or serial. On our migration journey we will use some Autopilot Device attributes([https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities](https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities)).
 The ones we will focus on are:
-- **{id}** is a unique GGUID Id for distinguishing the object in Endpoint Manager.
+- **{id}** is a unique GGUID Id for distinguishing the object in MEM.
 - **{groupTag}** is a string specifying the autopilot profile for deployment.
 - **{serialNumber}** is a string specifying the serial number of the device.
 - **{azureActiveDirectoryDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
 - **{azureAdDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
  
 ### Microsoft Defender for Endpoint Configuration (MDE)
+Separating device management in MDE differs than MEM or AAD. 
+1. You create Roles by setting the permissions for the users and assign the role to an AAD Group. 
+2. You create Device Groups based on rules (similar to the dynamic groups of AAD) and you assign one or more user AAD Groups that can manage these Device Groups.
+
+In case you can to customize device assignment to Device Groups in MDE, MDE offers the flexibility of tags. Tags are free text strings that you can define and assign them on devices. 
+For our example we start by creating 3 custom roles, one for each company.
+For Company A:
+- `IT Department of Company A` and we set all the permissions we want *IT Department of Company A* to manage and we assign the Role to AAD Group `IT Department of Company A`.
+
+We follow the same process for every company. 
+Then we have to create the Device Groups on MDE. We create one device Group for each company.
+For Company A:
+- `Supported Devices of Company A`
+   - the rule we set is that `Tag equals IT Department of Company A` .
+   - the users that have access on the Device Group is `IT Department of Company A`.
+
+
 
 Security Graph API for MDE([https://api.securitycenter.microsoft.com/api/machines/](https://api.securitycenter.microsoft.com/api/machines/))
 
-"id": "0002a344412985ce8629d2ea979f98d57449b243",
-"computerDnsName": "stlpmavrakis.corp.vionet.gr",
-"aadDeviceId": "888d2c94-b23c-4b8c-b25b-e878aad0b6e2", AADDeviceID (not object Id)
-"machineTags": ["IT Department of STEELMET"],
+The ones we will focus on are:
+- **{id}** is a unique GGUID Id for distinguishing the object in MDE.
+- **{computerDnsName}** is a string and usually it's the hostname of the device (including domain name).
+- **{machineTags}** is a list of strings used to filter the device in MDE. 
+- **{aadDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
 
 ## Linking the devices among AAD, MEM , Autopilot and MDE
 
@@ -230,7 +248,7 @@ Using the attributes for each entity we attempt to make the links displayed on t
 The **white** links display out of the box connections used by the products.
 The **yellow** links display the conceptual link we will try to create using strings for distinguishing each company. 
 
-## Automated Linking
+## Automated Migration
 
 ### Logic App
 
