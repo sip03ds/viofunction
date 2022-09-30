@@ -1,4 +1,4 @@
-# Using a Logic App with Azure Durable Functions for automating Device Synchronization among MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
+# Using a Logic App with Azure Durable Functions for automating Device Synchronization among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
 I have worked for an group organization that has many subsidiaries. 
 Every subsidiary has its own IT department that should have a different degree of freedom for performing actions on Cloud MS Products. 
 All companies exist under the same tenant.
@@ -51,7 +51,15 @@ The last one (3) is assigned.
 More over we then create a group per company. For Company A, we name it "IT Department of Company A" and it contains all administrators of Company A.
 This group can be Dynamic , Privileged Access Group (if you want to use Privileged Identity Management). 
 
-Each device is distinguished under each administrative unit by **device category** attribute on Graph API for AAD ([https://graph.microsoft.com/beta/devices](https://graph.microsoft.com/beta/devices))
+Each AAD Device entity in Graph API has many attributes ([https://graph.microsoft.com/beta/devices](https://graph.microsoft.com/beta/devices))
+For our project we will focus on the following ones:
+**- id ** - a unique GGUID Id for distinguishing the object in AAD
+**- deviceId **- a unique GGUID Id for linking the object with other entities in Graph API
+**- displayName ** - a string - usually it's the hostname of the device (without the domain name)
+**- Physical Id **- a list of strings - with physical hardware characteristics of the device
+**- ZTDID Id **- Zero Touch Device Id - part of the physical id list - containing the autopilot device id
+**- Order Id **- part of the physical id list - containing a user defined string
+
 
 
 "id": "002d3589-bf8b-402f-917f-151416fb4573",
@@ -108,8 +116,8 @@ Security Graph API for MDE([https://api.securitycenter.microsoft.com/api/machine
 Using the attributes for each entity we attempt to make the links displayed on the following figure:
 ![Entity Links](https://github.com/sip03ds/viofunction/blob/81005d0db697b858f2cbe2527a3209d937bf56c2/src/main/resources/images/Graph_Api_Links.png)
 
-The white links display out of the box connections used by the products.
-The yellow links display the conceptual link we will try to create using strings for distinguishing each company. 
+The **white** links display out of the box connections used by the products.
+The **yellow** links display the conceptual link we will try to create using strings for distinguishing each company. 
 
 ## Automated Linking
 
