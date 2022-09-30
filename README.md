@@ -44,7 +44,8 @@ For Company A, we will have `IT Department of Company A`.
 
 ### Azure Active Directory Configuration (AAD)
 AAD is the basis of our implementation. 
-On AAD we will create different security groups that will be reused on MEM and MDE. 
+On AAD we will create different security groups that will be reused on MEM and MDE.
+To distinguish administrative authorities we will utilize administrative units.
 
 Initially, using our example we will create 3 administrative units per company
 For Company A:
@@ -64,7 +65,7 @@ device.deviceCategory -eq "IT Department of Company A"
 ```
 
 For the *users* dynamic administrative unit, the dynamic rule will contain every user supported by each IT Department.
-For Company A, the rule can be :
+For Company A, the rule can be:
 
 
 ```
@@ -97,45 +98,120 @@ We follow the same pattern for each Company to distinguish users and devices adm
 The achievement so far is that each IT Department of each company has the ability to manage their users and devices in AAD. 
 They can reset passwords or troubleshoot MFA, they assign licenses on their users, delete AAD devices under their authority. 
 
-For our automation project later, we will use a few AAD Device attributes ([https://graph.microsoft.com/beta/devices](https://graph.microsoft.com/beta/devices)). 
+The ability is there but data has not been migrated. In order to start managing devices, we have to populate the right attribute on users and users based on specific rules.
+We will automate the migration process by using some AAD Device attributes ([https://graph.microsoft.com/beta/devices](https://graph.microsoft.com/beta/devices)). 
 The ones we will focus on are:
-- **{id}** is a unique GGUID Id for distinguishing the object in AAD.
-- **{deviceId}** is a unique GGUID Id for linking the object with other entities in Graph API.
-- **{displayName}** is a string and usually it's the hostname of the device (without the domain name).
+- **{id}** is a unique GUID Id for distinguishing the object in AAD.
+- **{deviceId}** is a unique GUID Id for linking the object with other entities in Graph API.
+- **{displayName}** is a string and usually it's the hostname of the device (without domain name).
 - **{physicalIds}** is a list of strings with physical hardware characteristics of the device.
     - **{[ZTDID]}** is part of the physical id list (Zero Touch Device Id), containing the autopilot device id.
     - **{[OrderId]}** is part of the physical id list - containing a user defined string.
 
 ### Microsoft Endpoint Configuration (MEM)
-On Endpoint Configuration Manager we create a Scope Tag per company.
-For Company A, we name it "IT Department of Company A". 
+In order to separate users and devices for application deployment, profile assignment we will create separate AAD groups for each company. 
+We create 3 different dynamic groups per company, two for the devices and one for the users. 
+For Company A:
+1. `Supported devices of IT Department of Company A` - *Dynamic Membership*
+2. `Supported users of IT Department of Company A` - *Dynamic Membership*
 
-Each device is distinguished under each scope tag by **device category** attribute on Graph API for Managed Devices ([https://graph.microsoft.com/beta/deviceManagement/managedDevices](https://graph.microsoft.com/beta/deviceManagement/managedDevices))
+For the `Supported devices of IT Department of Company A` security group, the dynamic rule will contain every device supported by each IT Department.
+For Company A, the rule is:
 
-"id": "ac753f45-dc86-421b-8fe8-cde09e8a498a",
-"deviceName": "CBLPRD01",
-"deviceCategoryDisplayName": "IT Department of CABLEL",
-"userPrincipalName": "cblprduser@hellenic-cables.com",
-"serialNumber": "CZC7037VX6",
-"azureActiveDirectoryDeviceId": "ddf37b4e-f68b-4add-a164-881b7bbe6504",
-"azureADDeviceId": "ddf37b4e-f68b-4add-a164-881b7bbe6504",
+```
+device.deviceCategory -eq "IT Department of Company A"
+```
+
+For the `Supported users of IT Department of Company A` security group, the dynamic rule will contain every user supported by each IT Department.
+For Company A, the rule is:
+
+```
+user.employeeOrgData -eq "IT Department of Company A"
+```
+
+We follow the same pattern for each Company to distinguish users and devices administrative units.
+For devices, we can further distinguish devices by using different groups per criteria (you can use dynamic rules that contain OS, OS build number, Vendor).
+
+Then we have to create device categories on Endpoint Manager.
+We navigate under devices and we configure each Device Category per Company:
+1. IT Department of Central IT
+2. IT Department of Company A
+3. IT Department of Company B
+
+The next step is separating administration realms.
+We will utilize scope tags. Scope tags determine which objects administrators are able to administer.
+1. We create a scope tag for each Company. 
+    - `IT Department of Company A`.
+    Scope tags included groups will contain the dynamic group of devices `Supported devices of IT Department of Company A`.
+2. We create a custom role for each Company assigning all necessary permissions you desire the IT Departments to configure
+3. We assign the custom role to `IT Department of Company A` group, we include `Supported devices of IT Department of Company A` and `Supported users of IT Department of Company A` and set the scope tag to `IT Department of Company A`
+
+The achievement is that on top of distinguished administration on AAD, each company's IT Department can manage their devices on Endpoint Manager.
+IT departments can now deploy applications, push configuration profiles for devices based on the permissions set. 
+We can also use the groups of Devices for deploying applications
+
+When a new devices are enrolled on Endpoint Manager (not autopilot device); and company portal is pushed on the device users will have to select the appropriate device category. 
+Administrators can override user selection by changing the device category attribute. 
+
+Later, we will automate the process of filling in device cateogry by using some Managed Device attributes ([https://graph.microsoft.com/beta/deviceManagement/managedDevices](https://graph.microsoft.com/beta/deviceManagement/managedDevices)).
+The ones we will focus on are:
+- **{id}** is a unique GUID Id for distinguishing the object in Endpoint Manager.
+- **{deviceName}** is a string and usually it's the hostname of the device (without domain name).
+- **{userPrincipalName}** is a string usually its the UPN of the primary user of the device. It contains the domain name of the company and we can use it to find the company supporting the device
+- **{serialNumber}** is a string specifying the serial number of the device.
+- **{azureActiveDirectoryDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
+- **{azureADDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
 
 ### Autopilot Configuration
-On AAD create create a dynamic group for devices per company. 
+In order to separate devices for autopilot we will create separate AAD groups and autopilot profiles for each company. 
+We will create different dynamic groups per autopilot profile for each company. Each group will associate a different autopilot profile to the devices for the company.
+For demonstration purposes, suppose that we want 2 autopilot enrollment profiles per company, a hybrid and a cloud one. 
+Initially, we will create 2 different AAD groups per company for our example for distinguishing devices for each profile. 
+Then we will create the autopilot enrollment profiles. 
 
-On Endpoint Configuration Manager we create an autopilot profile per company.
-The profile deploys a specific naming pattern (e.g. compapc001 - company a pc 001) for each device. 
+1. We will create a group `Supported autopilot devices cloud of IT Department of Company A` dynamic administrative unit, the dynamic rule will contain every autopilot device we wish to deploy cloud profile supported by each IT Department.
+For Company A, the rule is:
 
-Graph API for Autopilot Device([https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities](https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities))
+```
+(device.devicePhysicalIDs -any _ -contains "[ZTDID]") and (device.devicePhysicalIDs -any _ -contains "[OrderID]:CLOUD_COMPANY_A")
+```
 
-Each device is distinguished under each scope tag by **Serial** and 
+2. We will create a group `Supported autopilot devices hybrid of IT Department of Company A` dynamic administrative unit, the dynamic rule will contain every autopilot device we wish to deploy hybrid profile supported by each IT Department.
+For Company A, the rule is:
 
-"id": "8ac4e717-f429-4091-854c-6a1b60a90912",   --> [ZTDID]@AAD
-"azureActiveDirectoryDeviceId": "b81c8159-2b09-40ad-915c-fc726886bad2",
-"azureAdDeviceId": "b81c8159-2b09-40ad-915c-fc726886bad2",
-"groupTag": "CLOUD_STEELMET",
-"managedDeviceId": "00000000-0000-0000-0000-000000000000", 
-"serialNumber": "0000-0003-4209-7652-2425-8798-38",
+```
+(device.devicePhysicalIDs -any _ -contains "[ZTDID]") and (device.devicePhysicalIDs -any _ -contains "[OrderID]:HYBRID_COMPANY_A")
+```
+
+We follow the same pattern for every company.
+We get back on Endpoint Manager Administration and we update the scope tags with the groups created as well as scope assignment with the groups we just created. 
+
+Under devices and windows enrollment we enable automatic enrollment so every Windows device is turned into an autopilot device.
+Moreover, following our example we create 2 different windows autopilot profiles for each company. 
+
+1. We will create a profile named `Company A Cloud` , the profile must:
+   - Covert all existing targeted devices to Autopilot.
+   - Contain any OOBE configuration we wish BUT we need to apply a different naming pattern for distinguishing the profile for Company A. We can use `compacloud%RAND:4%` (Company A Cloud followed by 4 random numbers. Do not forget that computer names must be up to 15 alphanumerics)
+   - Deploy Autopilot profile to the group `Supported autopilot devices cloud of IT Department of Company A`
+
+2. We will create a profile named `Company A Hybrid` , the dynamic rule will contain every autopilot device we wish to deploy cloud profile supported by each IT Department.
+   - Covert all existing targeted devices to Autopilot.
+   - Contain any OOBE configuration we wish BUT we need to apply a different naming pattern for distinguishing the profile for Company A. We can use `compabybrid%RAND:4%` (Company A Hybrid followed by 4 random numbers. Do not forget that computer names must be up to 15 alphanumerics)
+   - Deploy Autopilot profile to the group `Supported autopilot devices hybrid of IT Department of Company A`
+
+Now if we navigate to the list of autopilot devices we can set Group Tag of a device to `CLOUD_COMPANY_A` or `HYBRID_COMPANY_A` and the autopilot profile will be assigned to the autopilot device.
+You can use these groups to deploy applications, push configuration profiles and achieve high level of autodeployment for new devices.
+
+We have achieved to automate profile deployment to autopilot devices. For every new device that you buy you may provide the right **Group Tag** to the vendor on your order and the device can be handed to the user straight away from the factory.
+As soon as the computer boots, the right profile and any predefined applications will be deployed. 
+
+For existing devices we will have to migrate them on the right profile based on their computer name or serial. On our migration journey we will use some Autopilot Device attributes([https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities](https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities)).
+The ones we will focus on are:
+- **{id}** is a unique GGUID Id for distinguishing the object in Endpoint Manager.
+- **{groupTag}** is a string specifying the autopilot profile for deployment.
+- **{serialNumber}** is a string specifying the serial number of the device.
+- **{azureActiveDirectoryDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
+- **{azureAdDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
  
 ### Microsoft Defender for Endpoint Configuration (MDE)
 
