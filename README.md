@@ -53,15 +53,15 @@ This group can be Dynamic , Privileged Access Group (if you want to use Privileg
 
 Each device is distinguished under each administrative unit by **device category** attribute on Graph API for AAD ([https://graph.microsoft.com/beta/devices](https://graph.microsoft.com/beta/devices))
 
- "AzureObjectId"/"id": "001a0a77-50c7-42a1-97b4-349066ad56e5",
- "deviceCategory": "IT Department of VIOMAL",
- "AzureDeviceId"/"deviceId": "abea4fb9-9a9a-47f6-8627-7da71d37a2c0", 
-"displayName": "VMLVTDWRH",
-            "physicalIds": [
-                "[OrderId]:CLOUD_ICME",
-                "[ZTDID]:fda09c69-5181-49f2-b7e3-bda6c17e3355",
-                "[HWID]:h:6896142841360412"
-            ],
+
+"id": "002d3589-bf8b-402f-917f-151416fb4573",
+"deviceId": "0d7fe7c6-6437-4b36-8678-6f98b1031f6e",
+"displayName": "JXWGF2S",
+"[ZTDID]:12944ab2-bdfe-45b9-9171-8d1c95e41ac4",
+
+    "azureActiveDirectoryDeviceId": "0d7fe7c6-6437-4b36-8678-6f98b1031f6e",
+    "azureAdDeviceId": "0d7fe7c6-6437-4b36-8678-6f98b1031f6e",
+
 
 ### Microsoft Endpoint Configuration (MEM)
 On Endpoint Configuration Manager we create a Scope Tag per company.
@@ -87,11 +87,11 @@ Graph API for Autopilot Device([https://graph.microsoft.com/beta/deviceManagemen
 
 Each device is distinguished under each scope tag by **Serial** and 
 
+"id": "8ac4e717-f429-4091-854c-6a1b60a90912",   --> [ZTDID]@AAD
 "azureActiveDirectoryDeviceId": "b81c8159-2b09-40ad-915c-fc726886bad2",
 "azureAdDeviceId": "b81c8159-2b09-40ad-915c-fc726886bad2",
-"managedDeviceId": "00000000-0000-0000-0000-000000000000", 
 "groupTag": "CLOUD_STEELMET",
-"id": "8ac4e717-f429-4091-854c-6a1b60a90912",   --> [ZTDID]@AAD
+"managedDeviceId": "00000000-0000-0000-0000-000000000000", 
 "serialNumber": "0000-0003-4209-7652-2425-8798-38",
  
 ### Microsoft Defender for Endpoint Configuration (MDE)
@@ -101,11 +101,15 @@ Security Graph API for MDE([https://api.securitycenter.microsoft.com/api/machine
 "id": "0002a344412985ce8629d2ea979f98d57449b243",
 "computerDnsName": "stlpmavrakis.corp.vionet.gr",
 "aadDeviceId": "888d2c94-b23c-4b8c-b25b-e878aad0b6e2", AADDeviceID (not object Id)
-"machineTags": [
-				"IT Department of STEELMET"
-			],
+"machineTags": ["IT Department of STEELMET"],
 
 ## Linking the devices among AAD, MEM , Autopilot and MDE
+
+Using the attributes for each entity we attempt to make the links displayed on the following figure:
+![Entity Links](https://myoctocat.com/assets/images/base-octocat.svg)
+
+The white links display out of the box connections used by the products.
+The yellow links display the conceptual link we will try to create using strings for distinguishing each company. 
 
 ## Automating Linking
 
