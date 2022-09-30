@@ -19,7 +19,7 @@ We want to automate synchronization of device assignment under each *"administra
 - We can create and manage an Azure Key Vault.
 - We can create Azure Durable Functions.
 - We can create logic apps on Azure.
-- InTune, MDE and AAD are already configured & integrated.
+- AAD, MEM and MDE are already configured & integrated where applicable.
 - You are aware of MS Graph API, MS Security Graph API, Managed Identities.
 - You are familiar with coding and JSON (in my case I am using Java 11 and JSON).
 
@@ -224,24 +224,28 @@ For Company A:
 - `IT Department of Company A` and we set all the permissions we want *IT Department of Company A* to manage and we assign the Role to AAD Group `IT Department of Company A`.
 
 We follow the same process for every company. 
-Then we have to create the Device Groups on MDE. We create one device Group for each company.
+Then we have to create the Device Groups on MDE. We create one device Group per company.
 For Company A:
 - `Supported Devices of Company A`
    - the rule we set is that `Tag equals IT Department of Company A` .
    - the users that have access on the Device Group is `IT Department of Company A`.
 
+We have achieved to create a different administration realm for each company on MDE. 
+Every device that is enrolled to MDE should get the appropriate tag in order to be added on the right administration realm.
 
-
-Security Graph API for MDE([https://api.securitycenter.microsoft.com/api/machines/](https://api.securitycenter.microsoft.com/api/machines/))
-
-The ones we will focus on are:
+Now we need to set the tag on every device we already have on MDE. In order to migrate we will use Security Graph API for MDE([https://api.securitycenter.microsoft.com/api/machines/](https://api.securitycenter.microsoft.com/api/machines/))
+We will utilize the following attributes to achieve migration:
 - **{id}** is a unique GGUID Id for distinguishing the object in MDE.
 - **{computerDnsName}** is a string and usually it's the hostname of the device (including domain name).
 - **{machineTags}** is a list of strings used to filter the device in MDE. 
 - **{aadDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
 
 ## Linking the devices among AAD, MEM , Autopilot and MDE
+So far we have configured all products and prepared them to accept different administration realms for each company.
+The next step is to establish a process that migrates any existing devices under the right administration realm and checks for any discrepancies for new devices.
+This process should run on a regular basis and try to sync the right attributes of device entities among all platforms.
 
+Check Graph API and Security Graph API I have come across the attributes that we need to use. 
 Using the attributes for each entity we attempt to make the links displayed on the following figure:
 ![Entity Links](https://github.com/sip03ds/viofunction/blob/81005d0db697b858f2cbe2527a3209d937bf56c2/src/main/resources/images/Graph_Api_Links.png)
 
