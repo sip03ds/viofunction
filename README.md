@@ -386,7 +386,7 @@ That's why we have to switch to app service plan and to tweak `host.json`, to in
   "functiontimeout": "00:59:59"
 ```
 
-Our Azure durable functions make (asynchronous HTTP calls)[https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview?tabs=csharp#async-http]
+Our Azure durable functions make [asynchronous HTTP calls](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview?tabs=csharp#async-http)
  
 ![Azure durable function async HTTP](https://learn.microsoft.com/en-us/azure/azure-functions/durable/media/durable-functions-concepts/async-http-api.png)
 
