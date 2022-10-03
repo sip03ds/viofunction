@@ -392,5 +392,8 @@ Our Azure durable functions make [asynchronous HTTP calls](https://learn.microso
 
 My code is not very sophisticated, I am using the [JAVA example](https://learn.microsoft.com/en-us/azure/azure-functions/durable/quickstart-java) provided by Microsoft.
 My changes on the Azure Function Durable provided, is that I pass arguments from the HTTP triggered function to the orchestrator function and finally to the activity function and that I am using a logger to send info to the function's log. 
+The activity function embodies all logic required for syncing device categories and makes the calls to Graph API and all checks.
+After implementing all the logic required, all response are created in JSON and returned back on the status URL response.
 
 ### Email notifications or MS Teams message posting
+The logic app parses any JSON responses and sends emails to helpdesk for any manual actions that may be required. We are using an M365 account for creating the response and posting messages to MS Teams.
