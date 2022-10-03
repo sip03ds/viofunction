@@ -1,4 +1,5 @@
-# Using a Logic App with Azure Durable Functions for migrating Administration Realms for Devices among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
+# Creating different administration realms for device management among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
+# a.k.a. Using Logic Apps and Azure Durable functions with a registered app for device category migration.
 I have worked for an group organization that has many subsidiaries. 
 Every subsidiary has its own IT department that desired to have full administrative permissions for performing actions on Cloud MS Products ONLY for their devices and their users.
 All companies exist under the same tenant.
