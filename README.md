@@ -280,12 +280,12 @@ High level the process is the following:
    In case there is an error (e.g. an HTTP call is not made), the Logic app will notify me by posting a message to MS Teams.
 
 ### Logic App
-We start by defining the recursive occurence for running the app. Preferably you can run it on night where there is minimal API traffic on your tenant. 
-Then we define a few variables that hold the URLs of the functions, the KeyVault name that we will use, a few counters, the email address where emails will be sent and any ([email limits that Exchange Online](https://learn.microsoft.com/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits)) is posing.
-
+We start by defining the recursive occurrence for running the app. Preferably you can run it on night where there is minimal API traffic on your tenant. 
+Then we define a few variables that hold the URLs of the functions, the KeyVault name that we will use, a few counters, the email address where emails will be sent and any ([email limits that Exchange Online](https://learn.microsoft.com/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits)) is posing. Then after initializing the variables we make HTTP calls using Azure Durable functions (Async HTTP calls). We get as response the status URL, and we query the status URL (get HTTP 202 response) until we the transaction is complete (get HTTP 200 response). In case there is an error on HTTP calls, the application will inform us on MS Teams by posting a message with the HTTP request and the HTTP response.
+Then we get the output from HTTP status and we parse the JSON response. Based on the response we receive, the application is sending an email for each item parsed on JSON response. The email can be forwarded with a predefined format on a ticketing system that can create a ticket to administrators notifying on the manual actions required.
 
 ### Registering an App
-We will register an app that will act as an intermediate between our functions and Graph API and Security Graph API providing relevant permissions.
+Azure Durable functions need to make calls to Graph API in order get data from SaaS Applications. We will register an app that will act as an intermediate between our functions and Graph API and Security Graph API providing relevant permissions.
 We register the application and create a API client secret that will store on the Keyvault we will create. 
 Then we provide the relevant API permissions on the application for interacting with Graph API:
 - AdministrativeUnit.Read.All, type: Application
@@ -353,6 +353,23 @@ Then we provide the relevant API permissions on the application for interacting 
 - User.Read.All, type: Application, WindowsDefenderATP
 - Vulnerability.Read.All, type: Application, WindowsDefenderATP
 
+The calls that we make to Graph API are listed below:
+- [List AAD Devices](https://learn.microsoft.com/en-us/graph/api/device-list?view=graph-rest-1.0&tabs=http)
+- [Get AAD Device by AAD Object Id](https://learn.microsoft.com/en-us/graph/api/device-get?view=graph-rest-1.0&tabs=http)
+- [List AAD Devices](https://learn.microsoft.com/en-us/graph/api/device-list?view=graph-rest-1.0&tabs=http), use filter to parse results for device ID
+- [List Managed Devices](https://learn.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0)
+- [Get Managed Device by Managed Device Id](https://learn.microsoft.com/en-us/graph/api/intune-devices-manageddevice-get?view=graph-rest-1.0)
+- [Update Managed Device properties](https://learn.microsoft.com/en-us/graph/api/intune-devices-manageddevice-update?view=graph-rest-1.0)
+- [List Device Categories](https://learn.microsoft.com/en-us/graph/api/intune-onboarding-devicecategory-list?view=graph-rest-1.0)
+- [List Autopilot Device Identities](https://learn.microsoft.com/en-us/graph/api/intune-enrollment-windowsautopilotdeviceidentity-list?view=graph-rest-1.0)
+- [Get Autopilot Device Identity by Id](https://learn.microsoft.com/en-us/graph/api/intune-enrollment-windowsautopilotdeviceidentity-get?view=graph-rest-1.0)
+- [Update Autopilot Device Identity Properties](https://learn.microsoft.com/en-us/graph/api/intune-enrollment-windowsautopilotdeviceidentity-updatedeviceproperties?view=graph-rest-1.0)
+
+Since there are no libraries for making calls to Security Graph, I am managing the access token to the application and make direct HTTP calls to Security Graph API. 
+The APIs used are:
+- [List MDE Machines](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/get-machines?view=o365-worldwide)
+- [Add Tags](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/add-or-remove-machine-tags?view=o365-worldwide)
+
 ### Securing access to the app using Keyvault
 
 
@@ -360,6 +377,20 @@ Then we provide the relevant API permissions on the application for interacting 
 ### Durable Functions to overcome Logic Limitations or Long running transactions using Async HTTP API
 Before starting we need to setup the right permissions.
 After creating the function, we need to assign IAM permissions on the Keyvault we just created to allow the functions to read secrets on the Keyvault.
+Durable functions allow us to overcome synchronous HTTP call limitations. 
+On every environment we might have unpredictable number of devices. This means that the data structures we create may become very very large. 
+Parsing these data structures may require large amount of processing time that exceeds synchronous HTTP call limitations. More over, these calls may exceed the [10 minute limitation](https://build5nines.com/azure-functions-extend-execution-timeout-past-5-minutes/) used on the (consumption app plan)[https://www.koskila.net/how-to-upgrade-your-azure-function-app-plan-when-you-originally-selected-consumption/] for Azure Functions.
+That's why we have to switch to app service plan and to tweak `host.json`, to include:
 
+```
+  "functiontimeout": "00:59:59"
+```
+
+Our Azure durable functions make (asynchronous HTTP calls)[https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview?tabs=csharp#async-http]
+ 
+![Azure durable function async HTTP](https://learn.microsoft.com/en-us/azure/azure-functions/durable/media/durable-functions-concepts/async-http-api.png)
+
+My code is not very sophisticated, I am using the [JAVA example](https://learn.microsoft.com/en-us/azure/azure-functions/durable/quickstart-java) provided by Microsoft.
+My changes on the Azure Function Durable provided, is that I pass arguments from the HTTP triggered function to the orchestrator function and finally to the activity function and that I am using a logger to send info to the function's log. 
 
 ### Email notifications or MS Teams message posting
