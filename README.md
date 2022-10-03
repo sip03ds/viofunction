@@ -284,6 +284,11 @@ High level the process is the following:
 We start by defining the recursive occurrence for running the app. Preferably you can run it on night where there is minimal API traffic on your tenant. 
 Then we define a few variables that hold the URLs of the functions, the KeyVault name that we will use, a few counters, the email address where emails will be sent and any ([email limits that Exchange Online](https://learn.microsoft.com/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits)) is posing. Then after initializing the variables we make HTTP calls using Azure Durable functions (Async HTTP calls). We get as response the status URL, and we query the status URL (get HTTP 202 response) until we the transaction is complete (get HTTP 200 response). In case there is an error on HTTP calls, the application will inform us on MS Teams by posting a message with the HTTP request and the HTTP response.
 Then we get the output from HTTP status and we parse the JSON response. Based on the response we receive, the application is sending an email for each item parsed on JSON response. The email can be forwarded with a predefined format on a ticketing system that can create a ticket to administrators notifying on the manual actions required.
+Concerning Azure Function calls:
+1. We sync AAD and Managed devices. 
+2. We delete Autopilot Devices with empty or null Serial.
+3. We assign autopilot profiles to Autopilot Devices.
+4. We add tags to Windows Defender endpoints that are associated with AAD devices.
 
 ### Registering an App
 Azure Durable functions need to make calls to Graph API in order get data from SaaS Applications. We will register an app that will act as an intermediate between our functions and Graph API and Security Graph API providing relevant permissions.
@@ -372,7 +377,7 @@ The APIs used are:
 - [Add Tags](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/add-or-remove-machine-tags?view=o365-worldwide)
 
 ### Securing access to the app using Keyvault
-
+We have used a keyvault to hide app secret from the implementation. In this manner, developers of logic app or even Azure Functions cannot get direct access on the API. 
 
 
 ### Durable Functions to overcome Logic Limitations or Long running transactions using Async HTTP API
