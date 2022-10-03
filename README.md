@@ -379,7 +379,7 @@ Before starting we need to setup the right permissions.
 After creating the function, we need to assign IAM permissions on the Keyvault we just created to allow the functions to read secrets on the Keyvault.
 Durable functions allow us to overcome synchronous HTTP call limitations. 
 On every environment we might have unpredictable number of devices. This means that the data structures we create may become very very large. 
-Parsing these data structures may require large amount of processing time that exceeds synchronous HTTP call limitations. More over, these calls may exceed the [10 minute limitation](https://build5nines.com/azure-functions-extend-execution-timeout-past-5-minutes/) used on the (consumption app plan)[https://www.koskila.net/how-to-upgrade-your-azure-function-app-plan-when-you-originally-selected-consumption/] for Azure Functions.
+Parsing these data structures may require large amount of processing time that exceeds synchronous HTTP call limitations. More over, these calls may exceed the [10 minute limitation](https://build5nines.com/azure-functions-extend-execution-timeout-past-5-minutes/) used on the [consumption app plan](https://www.koskila.net/how-to-upgrade-your-azure-function-app-plan-when-you-originally-selected-consumption/) for Azure Functions.
 That's why we have to switch to app service plan and to tweak `host.json`, to include:
 
 ```
