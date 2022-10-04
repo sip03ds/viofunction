@@ -290,6 +290,8 @@ Concerning Azure Function calls:
 3. We assign autopilot profiles to Autopilot Devices.
 4. We add tags to Windows Defender endpoints that are associated with AAD devices.
 
+Logic app file can be found on [Logic_App_DeviceSync.json](https://github.com/sip03ds/viofunction/blob/9852ad7ae4e6ef9fef28c2d899e7c6aa743f08e1/Logic_App_DeviceSync.json)
+
 ### Registering an App
 Azure Durable functions need to make calls to Graph API in order get data from SaaS Applications. We will register an app that will act as an intermediate between our functions and Graph API and Security Graph API providing relevant permissions.
 We register the application and create an API client secret that will store on the Keyvault we will create. 
@@ -400,6 +402,8 @@ My code is not very sophisticated, I am using the [JAVA example](https://learn.m
 My changes on the Azure Function Durable provided, is that I pass arguments from the HTTP triggered function to the orchestrator function and finally to the activity function and that I am using a logger to send info to the function's log. 
 The activity function embodies all logic required for syncing device categories and makes the calls to Graph API and all checks.
 After implementing all the logic required, all responses are created in JSON and returned on the status URL response.
+
+All durable functions files are [here](/main/src/main).
 
 ### Email notifications or MS Teams message posting
 The logic app parses any JSON responses and sends emails to helpdesk for any manual actions that may be required. We are using an M365 account for creating the response and posting messages to MS Teams.
