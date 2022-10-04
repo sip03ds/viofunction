@@ -290,7 +290,7 @@ Concerning Azure Function calls:
 3. We assign autopilot profiles to Autopilot Devices.
 4. We add tags to Windows Defender endpoints that are associated with AAD devices.
 
-Logic app file can be found on [Logic_App_DeviceSync.json](https://github.com/sip03ds/viofunction/blob/9852ad7ae4e6ef9fef28c2d899e7c6aa743f08e1/Logic_App_DeviceSync.json)
+JSON file representing Logic app can be found on [Logic_App_DeviceSync.json](https://github.com/sip03ds/viofunction/blob/9852ad7ae4e6ef9fef28c2d899e7c6aa743f08e1/Logic_App_DeviceSync.json)
 
 ### Registering an App
 Azure Durable functions need to make calls to Graph API in order get data from SaaS Applications. We will register an app that will act as an intermediate between our functions and Graph API and Security Graph API providing relevant permissions.
