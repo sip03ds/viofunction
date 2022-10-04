@@ -1,7 +1,7 @@
 # Creating different administration realms for device management among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
 # a.k.a. Using a Logic App with Azure Durable Functions for migrating Administration Realms for Devices among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
-I have worked for an group organization that has many subsidiaries. 
-Every subsidiary has its own IT department that desired to have full administrative permissions for performing actions on Cloud MS Products ONLY for their devices and their users.
+I have worked for a group organization that has many subsidiaries. 
+Every subsidiary has its own IT department that desires to have full administrative permissions for performing actions on Cloud MS Products ONLY for its devices and their users.
 All companies exist under the same tenant.
 Let's say that we have:
 - Central IT
@@ -9,12 +9,12 @@ Let's say that we have:
 - Company B IT
 
 ## Need: 
-We want to have Endpoint Management Administrators for **Central IT** , **Company A** IT Administrators managing aspects of their users (reset password/reregister MFA and change attributes) and their devices and **Company B** IT Administrators managing aspects of their users (reset password/reregister MFA and change attributes) their devices. 
-We want to automate synchronization of device assignment under each *"administrative realm"* (administrative unit in AAD terms , Scope Tags in MEM terms, Deployment Profile for Autopilot, Tagging in MDE terms). 
+We want to have Endpoint Management Administrators for **Central IT**, **Company A** IT Administrators managing aspects of their users (reset password/reregister MFA and change attributes) and their devices and **Company B** IT Administrators managing aspects of their users (reset password/reregister MFA and change attributes) their devices. 
+We want to automate synchronization of device assignment under each *"administrative realm"* (administrative unit in AAD term, Scope Tags in MEM terms, Deployment Profile for Autopilot, Tagging in MDE terms). 
 
 ## Assumptions: 
-- We have all necessary licenses needed (Azure AD P1 , E3 , E5 Security in my case).
-- Each company has its own domain name that is reflected on the UPN (user@centralit.com, user@companya.com , user@companyb.com).
+- We have all necessary licenses needed (Azure AD P1, E3, E5 Security in my case).
+- Each company has its own domain name that is reflected on the UPN (user@centralit.com, user@companya.com, user@companyb.com).
 - Each computer of each company follows a specific naming pattern.
 - We can register applications on AAD.
 - We can create and manage an Azure Key Vault.
@@ -22,7 +22,7 @@ We want to automate synchronization of device assignment under each *"administra
 - We can create logic apps on Azure.
 - AAD, MEM and MDE are already configured & integrated where applicable.
 - You are aware of MS Graph API, MS Security Graph API, Managed Identities.
-- You are familiar with coding (in my case I am using Java 11) and JSON .
+- You are familiar with coding (in my case I am using Java 11) and JSON.
 
 ## Scope: 
 - **Azure Active Directory**
@@ -46,7 +46,7 @@ For Company A, we will have `IT Department of Company A`.
 ### Azure Active Directory Configuration (AAD)
 AAD is the basis of our implementation. 
 On AAD we will create different security groups that will be reused on MEM and MDE.
-To distinguish administrative authorities we will utilize administrative units.
+To distinguish administrative authorities, we will utilize administrative units.
 
 Initially, using our example we will create 3 administrative units per company
 For Company A:
@@ -74,8 +74,8 @@ user.employeeOrgData -eq "IT Department of Company A"
 ```
 
 For users you can also use `CompanyName` attribute. In my humble opinion it has more operational overhead, since considering future use, IT Department of Company A may support more than one Company. 
-In this case you have to go back and update every dynamic administrative unit and dynamic rule in relevant AAD dynamic group with the new Company Name, hence my suggestion to use an other distinct attribute.
-Considering also hybrid environments, we may have extension attributes being synchronized and populated from on-premise Active Directory where we already populate this attribute and we may use that one in AAD. 
+In this case you must go back and update every dynamic administrative unit and dynamic rule in relevant AAD dynamic group with the new Company Name, hence my suggestion to use another distinct attribute.
+Considering also hybrid environments, we may have extension attributes being synchronized and populated from on-premises Active Directory where we already populate this attribute, and we may use that one in AAD. 
 
 Then we create a group with Administrators per company. For Company A, we name it `IT Department of Company A` and it contains all administrators of Company A.
 We can use any type of group (Dynamic , Privileged Access Group, in case you want to use Privileged Identity Management). For dynamic you can leverage on `user.CompanyName`, `user.employeeOrgData` and `user.department`.
@@ -96,10 +96,10 @@ For the `IT Department of Company A - Groups` administrative unit created, we pr
 
 We follow the same pattern for each Company to distinguish users and devices administrative units.
 
-The achievement so far is that each IT Department of each company has the ability to manage their users and devices in AAD. 
+The achievement so far is that each IT Department of each company can manage their users and devices in AAD. 
 They can reset passwords or troubleshoot MFA, they assign licenses on their users, delete AAD devices under their authority. 
 
-The ability is there but data has not been migrated. In order to start managing devices, we have to populate the right attribute on users and users based on specific rules.
+The ability is there but data has not been migrated. In order to start managing devices, we must populate the right attribute on users and users based on specific rules.
 We will automate the migration process by using some AAD Device attributes ([https://graph.microsoft.com/beta/devices](https://graph.microsoft.com/beta/devices)). 
 The ones we will focus on are:
 - **{id}** is a unique GUID Id for distinguishing the object in AAD.
@@ -133,14 +133,14 @@ user.employeeOrgData -eq "IT Department of Company A"
 We follow the same pattern for each Company to distinguish users and devices administrative units.
 For devices, we can further distinguish devices by using different groups per criteria (you can use dynamic rules that contain OS, OS build number, Vendor).
 
-Then we have to create device categories on Endpoint Manager.
-We navigate under devices and we configure each Device Category per Company:
+Then we must create device categories on Endpoint Manager.
+We navigate under devices, and we configure each Device Category per Company:
 1. `IT Department of Central IT`
 2. `IT Department of Company A`
 3. `IT Department of Company B`
 
 The next step is separating administration realms.
-We will utilize scope tags. Scope tags determine which objects administrators are able to administer.
+We will utilize scope tags. Scope tags determine which objects administrators can administer.
 1. We create a scope tag for each Company. 
     - `IT Department of Company A`.
     Scope tags included groups will contain the dynamic group of devices `Supported devices of IT Department of Company A`.
@@ -151,14 +151,14 @@ The achievement is that on top of distinguished administration on AAD, each comp
 IT departments can now deploy applications, push configuration profiles for devices based on the permissions set. 
 We can also use the groups of Devices for deploying applications
 
-When a new devices are enrolled on Endpoint Manager (not autopilot device); and company portal is pushed on the device users will have to select the appropriate device category. 
+When new devices are enrolled on Endpoint Manager (not autopilot device); and company portal is pushed on the device users will have to select the appropriate device category. 
 Administrators can override user selection by changing the device category attribute. 
 
 Later, we will automate the process of filling in device category by using some Managed Device attributes ([https://graph.microsoft.com/beta/deviceManagement/managedDevices](https://graph.microsoft.com/beta/deviceManagement/managedDevices)).
 The ones we will focus on are:
 - **{id}** is a unique GUID Id for distinguishing the object in MEM.
 - **{deviceName}** is a string and usually it's the hostname of the device (without domain name).
-- **{userPrincipalName}** is a string usually its the UPN of the primary user of the device. It contains the domain name of the company and we can use it to find the company supporting the device
+- **{userPrincipalName}** is a string usually it’s the UPN of the primary user of the device. It contains the domain name of the company, and we can use it to find the company supporting the device
 - **{serialNumber}** is a string specifying the serial number of the device.
 - **{azureActiveDirectoryDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
 - **{azureADDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
@@ -187,26 +187,26 @@ For Company A, the rule is:
 We follow the same pattern for every company.
 We get back on Endpoint Manager Administration and we update the scope tags with the groups created as well as scope assignment with the groups we just created. 
 
-Under devices and windows enrollment we enable automatic enrollment so every Windows device is turned into an autopilot device.
+Under devices and windows enrollment, we enable automatic enrollment so every Windows device is turned into an autopilot device.
 Moreover, following our example we create 2 different windows autopilot profiles for each company. 
 
-1. We will create a profile named `Company A Cloud` , the profile must:
+1. We will create a profile named `Company A Cloud`, the profile must:
    - Covert all existing targeted devices to Autopilot.
-   - Contain any OOBE configuration we wish BUT we need to apply a different naming pattern for distinguishing the profile of the device for Company A. We can use `compacloud%RAND:4%` (Company A Cloud followed by 4 random numbers. Do not forget that computer names must be up to 15 alphanumerics)
+   - Contain any OOBE configuration we wish BUT we need to apply a different naming pattern for distinguishing the profile of the device for Company A. We can use `compacloud%RAND:4%` (Company A Cloud followed by 4 random numbers. Do not forget that computer names must be up to 15 alphanumeric)
    - Deploy Autopilot profile to the group `Supported autopilot devices cloud of IT Department of Company A`
 
-2. We will create a profile named `Company A Hybrid` , the dynamic rule will contain every autopilot device we wish to deploy cloud profile supported by each IT Department.
+2. We will create a profile named `Company A Hybrid`, the dynamic rule will contain every autopilot device we wish to deploy cloud profile supported by each IT Department.
    - Covert all existing targeted devices to Autopilot.
-   - Contain any OOBE configuration we wish BUT we need to apply a different naming pattern for distinguishing the profile of the device for Company A. We can use `compabybrid%RAND:4%` (Company A Hybrid followed by 4 random numbers. Do not forget that computer names must be up to 15 alphanumerics)
+   - Contain any OOBE configuration we wish BUT we need to apply a different naming pattern for distinguishing the profile of the device for Company A. We can use `compabybrid%RAND:4%` (Company A Hybrid followed by 4 random numbers. Do not forget that computer names must be up to 15 alphanumeric)
    - Deploy Autopilot profile to the group `Supported autopilot devices hybrid of IT Department of Company A`
 
 Now if we navigate to the list of autopilot devices we can set Group Tag of a device to `CLOUD_COMPANY_A` or `HYBRID_COMPANY_A` and the autopilot profile will be assigned to the autopilot device.
-You can use these groups to deploy applications, push configuration profiles and achieve high level of autodeployment for new devices.
+You can use these groups to deploy applications, push configuration profiles and achieve high level of auto deployment for new devices.
 
 We have achieved to automate profile deployment to autopilot devices. For every new device that you buy you may provide the right **Group Tag** to the vendor on your order and the device can be handed to the user straight away from the factory.
 As soon as the computer boots, the right profile and any predefined applications will be deployed. 
 
-For existing devices we will have to migrate them on the right profile based on their computer name or serial. On our migration journey we will use some Autopilot Device attributes([https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities](https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities)).
+For existing devices, we will have to migrate them on the right profile based on their computer name or serial. On our migration journey we will use some Autopilot Device attributes([https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities](https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities)).
 The ones we will focus on are:
 - **{id}** is a unique GGUID Id for distinguishing the object in MEM.
 - **{groupTag}** is a string specifying the autopilot profile for deployment.
@@ -217,7 +217,7 @@ The ones we will focus on are:
 ### Microsoft Defender for Endpoint Configuration (MDE)
 Separating device management in MDE differs than MEM or AAD. 
 1. You create Roles by setting the permissions for the users and assign the role to an AAD Group. 
-2. You create Device Groups based on rules (similar to the dynamic groups of AAD) and you assign one or more user AAD Groups that can manage these Device Groups.
+2. You create Device Groups based on rules (like the dynamic groups of AAD) and you assign one or more user AAD Groups that can manage these Device Groups.
 
 In case you want to customize device assignment to Device Groups in MDE, MDE offers the flexibility of tags. Tags are free text strings that you can define and assign them on devices. 
 For our example we start by creating 3 custom roles, one for each company.
@@ -225,10 +225,10 @@ For Company A:
 - `IT Department of Company A` and we set all the permissions we want *IT Department of Company A* to manage and we assign the Role to AAD Group `IT Department of Company A`.
 
 We follow the same process for every company. 
-Then we have to create the Device Groups on MDE. We create one device Group per company.
+Then we must create the Device Groups on MDE. We create one device Group per company.
 For Company A:
 - `Supported Devices of Company A`
-   - the rule we set is that `Tag equals IT Department of Company A` .
+   - the rule we set is that `Tag equals IT Department of Company A`.
    - the users that have access on the Device Group is `IT Department of Company A`.
 
 We have achieved to create a different administration realm for each company on MDE. 
@@ -241,8 +241,8 @@ We will utilize the following attributes to achieve migration:
 - **{machineTags}** is a list of strings used to filter the device in MDE. 
 - **{aadDeviceId}** is a unique GGUID Id for distinguishing the object in AAD. 
 
-## Linking the devices among AAD, MEM , Autopilot and MDE
-So far we have configured all products and prepared them to accept different administration realms for each company.
+## Linking the devices among AAD, MEM, Autopilot and MDE
+So far, we have configured all products and prepared them to accept different administration realms for each company.
 The next step is to establish a process that migrates any existing devices under the right administration realm and checks for any discrepancies for new devices.
 This process should run on a regular basis and try to sync the right attributes of device entities among all platforms.
 
@@ -256,14 +256,14 @@ The **yellow** links display the conceptual link we will try to create using str
 ## Automated Migration
 You can create powershell scripts that run on a regular basis on a task scheduler, but in the cloud era, setting up redundant servers and maintaining them is a **waste of time**.
 I wanted a solution that has minimal next to zero maintenance, minimal cost that runs secure and does the job; and in case anything goes wrong to let me know, so I can fix it.
-To achieve the goal I decided to deploy different cloud technologies (and as I found out during the process, I also had to come across their limitations).
+To achieve the goal, I decided to deploy different cloud technologies (and as I found out during the process, I also had to come across their limitations).
 
 The whole process is wrapped around a Logic App that runs once per day on a consumption plan and costs ~10 Euros per month.
 Logic App is using an M365 account to send emails and notifications to MS Teams. Add ~6 Euros on the monthly bill for the M365 account.
 The Logic App calls a few Azure Durable Functions that make HTTP Async Calls (We have some long running transactions that take more than 10 minutes hence the need of Elastic Premium SKU). 
 The cost of Durable Functions run on Elastic Premium Tier App Service Plan and cost around ~200 Euros per month.
 Durable functions make calls to Graph API and Security Graph API and I have registered an app on AAD for this purpose. This comes free with AAD license.
-Last but not least, I am using an Azure Key Vault to hide the app secret that Azure Functions are using.
+Finally, I am using an Azure Key Vault to hide the app secret that Azure Functions are using.
 The cost of Key Vault is less than a Euro per month. All deployments take place in West Europe.
 As the time of writing (20/9/2022) the total monthly cost in West Europe is **~220 Euros**.
 I doubt if you can find a consistent administrator doing the migration job and checks and a server costing that much on a monthly basis.
@@ -272,18 +272,18 @@ How do we achieve migration?
 High level the process is the following: 
 1. The logic app runs once per day.
 2. During the run, Azure Functions help us make calls to Graph API via the Registered App.
-3. Functions get all the device entities (AAD,MEM managed device, MEM autopilot and MDE) from every platform using Java 11 API.
+3. Functions get all the device entities (AAD, MEM managed device, MEM autopilot and MDE) from every platform using Java 11 API.
 4. Functions try to match the entities attributes as displayed on the diagram.
-5. In case there are missing attributes functions try to update the attributes based on certain rules (using the hostname , or the domain name).
+5. In case there are missing attributes functions try to update the attributes based on certain rules (using the hostname, or the domain name).
 6. For devices that cannot be updated based on the info gathered, we create a JSON list that is returned to the logic App. 
 7. Logic app parses the response and prepares an email for each device along with the action required (update device category on MEM device).
-   As we may have a large amount of devices, we may hit Exchange Online limitations, so the logic app has timers to send emails respecting Exchange Online limitations.
-   In case there is an error (e.g. an HTTP call is not made), the Logic app will notify me by posting a message to MS Teams.
+   As we may have many devices, we may hit Exchange Online limitations, so the logic app has timers to send emails respecting Exchange Online limitations.
+   In case there is an error (e.g., an HTTP call is not made), the Logic app will notify me by posting a message to MS Teams.
 
 ### Logic App
 We start by defining the recursive occurrence for running the app. Preferably you can run it on night where there is minimal API traffic on your tenant. 
-Then we define a few variables that hold the URLs of the functions, the KeyVault name that we will use, a few counters, the email address where emails will be sent and any ([email limits that Exchange Online](https://learn.microsoft.com/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits)) is posing. Then after initializing the variables we make HTTP calls using Azure Durable functions (Async HTTP calls). We get as response the status URL, and we query the status URL (get HTTP 202 response) until we the transaction is complete (get HTTP 200 response). In case there is an error on HTTP calls, the application will inform us on MS Teams by posting a message with the HTTP request and the HTTP response.
-Then we get the output from HTTP status and we parse the JSON response. Based on the response we receive, the application is sending an email for each item parsed on JSON response. The email can be forwarded with a predefined format on a ticketing system that can create a ticket to administrators notifying on the manual actions required.
+Then we define a few variables that hold the URLs of the functions, the KeyVault name that we will use, a few counters, the email address where emails will be sent and any ([email limits that Exchange Online](https://learn.microsoft.com/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits)) is posing. Then after initializing the variables, we make HTTP calls using Azure Durable functions (Async HTTP calls). We get as response the status URL, and we query the status URL (get HTTP 202 response) until we the transaction is complete (get HTTP 200 response). In case there is an error on HTTP calls, the application will inform us on MS Teams by posting a message with the HTTP request and the HTTP response.
+Then we get the output from HTTP status, and we parse the JSON response. Based on the response we receive; the application is sending an email for each item parsed on JSON response. The email can be forwarded with a predefined format on a ticketing system that can create a ticket to administrators notifying on the manual actions required.
 Concerning Azure Function calls:
 1. We sync AAD and Managed devices. 
 2. We delete Autopilot Devices with empty or null Serial.
@@ -292,7 +292,7 @@ Concerning Azure Function calls:
 
 ### Registering an App
 Azure Durable functions need to make calls to Graph API in order get data from SaaS Applications. We will register an app that will act as an intermediate between our functions and Graph API and Security Graph API providing relevant permissions.
-We register the application and create a API client secret that will store on the Keyvault we will create. 
+We register the application and create an API client secret that will store on the Keyvault we will create. 
 Then we provide the relevant API permissions on the application for interacting with Graph API:
 - AdministrativeUnit.Read.All, type: Application
 - AdministrativeUnit.ReadWrite.All, type: Application, Microsoft Graph
@@ -377,15 +377,15 @@ The APIs used are:
 - [Add Tags](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/add-or-remove-machine-tags?view=o365-worldwide)
 
 ### Securing access to the app using Keyvault
-We have used a keyvault to hide app secret from the implementation. In this manner, developers of logic app or even Azure Functions cannot get direct access on the API. 
+We have used a Keyvault to hide app secret from the implementation. In this manner, developers of logic app or even Azure Functions cannot get direct access on the API. 
 
 
 ### Durable Functions to overcome Logic Limitations or Long running transactions using Async HTTP API
 Before starting we need to setup the right permissions.
 After creating the function, we need to assign IAM permissions on the Keyvault we just created to allow the functions to read secrets on the Keyvault.
 Durable functions allow us to overcome synchronous HTTP call limitations. 
-On every environment we might have unpredictable number of devices. This means that the data structures we create may become very very large. 
-Parsing these data structures may require large amount of processing time that exceeds synchronous HTTP call limitations. More over, these calls may exceed the [10 minute limitation](https://build5nines.com/azure-functions-extend-execution-timeout-past-5-minutes/) used on the [consumption app plan](https://www.koskila.net/how-to-upgrade-your-azure-function-app-plan-when-you-originally-selected-consumption/) for Azure Functions.
+On every environment we might have unpredictable number of devices. This means that the data structures we create may become very large. 
+Parsing these data structures may require large amount of processing time that exceeds synchronous HTTP call limitations. Moreover, these calls may exceed the [10 minute limitation](https://build5nines.com/azure-functions-extend-execution-timeout-past-5-minutes/) used on the [consumption app plan](https://www.koskila.net/how-to-upgrade-your-azure-function-app-plan-when-you-originally-selected-consumption/) for Azure Functions.
 That's why we have to switch to app service plan and to tweak `host.json`, to include:
 
 ```
@@ -399,7 +399,7 @@ Our Azure durable functions make [asynchronous HTTP calls](https://learn.microso
 My code is not very sophisticated, I am using the [JAVA example](https://learn.microsoft.com/en-us/azure/azure-functions/durable/quickstart-java) provided by Microsoft.
 My changes on the Azure Function Durable provided, is that I pass arguments from the HTTP triggered function to the orchestrator function and finally to the activity function and that I am using a logger to send info to the function's log. 
 The activity function embodies all logic required for syncing device categories and makes the calls to Graph API and all checks.
-After implementing all the logic required, all response are created in JSON and returned back on the status URL response.
+After implementing all the logic required, all responses are created in JSON and returned on the status URL response.
 
 ### Email notifications or MS Teams message posting
 The logic app parses any JSON responses and sends emails to helpdesk for any manual actions that may be required. We are using an M365 account for creating the response and posting messages to MS Teams.
