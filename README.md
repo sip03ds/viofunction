@@ -402,7 +402,8 @@ My changes on the Azure Function Durable provided, is that I pass arguments from
 The activity function embodies all logic required for syncing device categories and makes the calls to Graph API and all checks.
 After implementing all the logic required, all responses are created in JSON and returned on the status URL response.
 
-All durable functions files are [here](./main/src/main).
+All durable functions files are [here](./src/main).
+All durable functions files are [here](../main/src).
 
 ### Email notifications or MS Teams message posting
 The logic app parses any JSON responses and sends emails to helpdesk for any manual actions that may be required. We are using an M365 account for creating the response and posting messages to MS Teams.
