@@ -381,7 +381,6 @@ The APIs used are:
 ### Securing access to the app using Keyvault
 We have used a Keyvault to hide app secret from the implementation. In this manner, developers of logic app or even Azure Functions cannot get direct access on the API. 
 
-
 ### Durable Functions to overcome Logic Limitations or Long running transactions using Async HTTP API
 Before starting we need to setup the right permissions.
 After creating the function, we need to assign IAM permissions on the Keyvault we just created to allow the functions to read secrets on the Keyvault.
