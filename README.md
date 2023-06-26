@@ -1,6 +1,9 @@
 # Creating different administration realms for device management among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
 # a.k.a. Using a Logic App with Azure Durable Functions for migrating Administration Realms for Devices among SaaS MS Products (Azure Active Directory - Endpoint Manager - Autopilot - Defender for Endpoint).
-I have worked for a group organization that has many subsidiaries. 
+
+*Disclaimer: The names used in examples, scenarios, or discussions are fictitious and used solely for illustrative purposes. Any resemblance to actual persons, living or dead, or actual entities is purely coincidental. The use of fictitious names ensures privacy and confidentiality while providing informative content.*
+
+Suppose we have a group organization that has many subsidiaries. 
 Every subsidiary has its own IT department that desires to have full administrative permissions for performing actions on Cloud MS Products ONLY for its devices and their users.
 All companies exist under the same tenant.
 Let's say that we have:
