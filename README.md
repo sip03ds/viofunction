@@ -266,7 +266,6 @@ Durable functions make calls to Graph API and Security Graph API and I have regi
 Finally, I am using an Azure Key Vault to hide the app secret that Azure Functions are using.
 The cost of Key Vault is less than a Euro per month. All deployments take place in West Europe.
 As the time of writing (20/9/2022) the total monthly cost in West Europe is **~220 Euros**.
-I doubt if you can find a consistent administrator doing the migration job and checks and a server costing that much on a monthly basis.
 
 How do we achieve migration? 
 High level the process is the following: 
